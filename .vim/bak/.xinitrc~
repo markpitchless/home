@@ -1,6 +1,0 @@
-#sawfish &
-#startgnome
-#PATH=/usr/local/fluxbox/bin:$PATH
-#startfluxbox
-startgnome
-echo "Bang!"
