@@ -1,0 +1,110 @@
+#!/usr/bin/perl -w
+
+=pod
+
+=head1 NAME
+
+
+
+$Id:$
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=cut
+
+package ;
+
+use 5.6.0;
+use strict;
+
+# Object set up
+use base qw(Class::Accessor);
+use fields qw(
+
+             );
+               
+__PACKAGE__->mk_accessors( qw(
+
+                             ) ); 
+
+use constant DEBUG => 0;
+
+
+=head1 METHODS 
+
+=cut
+
+#------------------------------------------------------------------------------ 
+
+=head2 new
+
+Create new obj with members from fields pragma.
+
+B<NOTE:> fields builds obj as a peusdo hash
+
+=cut
+
+sub new {
+    my $proto = shift;
+    my $class = ref $proto || $proto;
+
+    my $me = fields::new($class);
+    
+    $me->_init(@_);
+   
+    return $me;
+}
+
+#------------------------------------------------------------------------------ 
+
+=head2 _init
+
+Does all the object initialisation after object creation by new. This is the
+method that should be overridden to add initiallisation code to new objects.
+This keeps actual instantiation clean. 
+
+Calls an accessor of the same name for any field passed to the constructor as
+part of a name/value pair list. Any non-existent field will cause an error.
+This error is raised by fields.
+
+ e.g.
+ new->( foo => 'bar' );
+ would call
+ $self->foo('bar');
+
+=cut
+
+sub _init {
+    my ($me) = shift;
+    my (%args) = @_; 
+  
+    # caller set accessor for any arg passed to the constructor with the same
+    # name. NB: the meth call will fail for non-existant fields
+    foreach ( keys(%args) ) {
+        $me->$_( $args{$_} );  
+    }
+}    
+
+#------------------------------------------------------------------------------ 
+
+
+
+#------------------------------------------------------------------------------ 
+
+1;
+
+__END__
+
+=head1 AUTHOR
+
+Mark Addison <mark.addison@itn.co.uk>
+
+=head1 TODO
+
+=head1 BUGS
+
+=head1 VERSION HISTORY
+
+=head1 SEE ALSO

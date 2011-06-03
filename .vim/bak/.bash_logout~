@@ -1,0 +1,10 @@
+# ~/.bash_logout
+
+#
+# SSH
+#
+if [ -e ~/ssh-agent ]; then
+    kill $SSH_AGENT_PID && rm ~/ssh-agent
+fi
+
+clear

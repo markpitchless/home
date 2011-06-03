@@ -1,0 +1,93 @@
+# ALSA Doc
+#
+# http://www.alsa-project.org/alsa-doc/doc-php/template.php?company=Nvidia&card=nForce&chip=NM2360&module=intel8x0
+#
+#pcm.intel8x0 {
+#   type hw
+#   card 0
+#}
+#
+#ctl.intel8x0 {
+#   type hw
+#   card 0
+#}
+
+
+# http://www.alsa-project.org/alsa-doc/doc-php/template.php?company=Nvidia&card=nForce&chip=NM2360&module=intel8x0
+#for nforce2 multichannel mixed alsa audio use this conf:
+#
+#--------------------------------------------
+### .asoundrc for nforce2 apu
+#
+#pcm.nforce-hw {
+#type hw
+#card 0
+#}
+#
+#pcm.!default {
+#type plug
+#slave.pcm "nforce"
+#}
+#
+#pcm.nforce {
+#type dmix
+#ipc_key 1234
+#slave {
+#pcm "hw:0,0"
+#period_time 0
+#period_size 1024
+#buffer_size 4096
+#rate 44100
+#}
+#}
+#
+#ctl.nforce-hw {
+#type hw
+#card 0
+#}
+#
+#--------------------------------------------
+#
+#this defines 2 multichannel enabled devices called "nforce" and "default".
+#for "raw" unmixed output (jackd for eg., it doesnt like the dmix plug
+#that much) it defines the device called "nforce-hw"
+#
+#example usage:
+#- xmms, you need the xmms-alsa plug and conf it to use the device called "nforce".
+#- (g)mplayer needs to be started with "gmplayer -ao alsa9:nforce"
+#
+#now it mixes all audio on alsa level verry fast, without using 
+#something like esound or arts.
+#
+#hope this helps
+#lars
+#
+
+#Finally got alsa to work on my nforce 1 msi k7n420. Had to drop the period in
+#half.
+pcm.nforce-hw {
+type hw
+card 0
+}
+
+pcm.!default {
+type plug
+slave.pcm "nforce"
+}
+
+pcm.nforce {
+type dmix
+ipc_key 1234
+slave {
+pcm "hw:0,0"
+period_time 0
+period_size 512
+buffer_size 4096
+rate 44100
+}
+}
+
+ctl.nforce-hw {
+type hw
+card 0
+}
