@@ -18,3 +18,8 @@ tmp
 usr
 Videos
 VirtualBox VMs
+.Xauthority
+.bash_history
+.cache/
+.sudo_as_admin_successful
+.viminfo
