@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+#
+# IDEA@ Output in Module::Build require format. Or update file direct.
+#
+
+foreach my $mod (@ARGV) {
+    my $loaded = eval "require $mod;" ? 1 : 0;
+    my $err = $@;
+    my $version;
+    if ($loaded) {
+        {
+            no strict 'refs';
+            $version = ${$mod . "::VERSION"} || "No VERSION found";
+        }
+    }
+    else {
+        if ( $err =~ "Can't locate" ) {
+            $version = "NOT INSTALLED";
+        }
+        else {
+            $version = "ERROR: $err";
+        }
+    }
+    print "$mod\t$version\n";
+}
