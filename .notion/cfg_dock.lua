@@ -10,6 +10,7 @@ mod_dock.create{
     -- Can comment ext_statusbar in cfg_ion.lua.
     -- http://comments.gmane.org/gmane.comp.window-managers.ion.general/5196
     mode="embedded",
+    --mode="floating",
     -- The screen to create the dock on
     screen=0,
     -- Corner or side of the screen to place the dock on.

@@ -1,4 +1,4 @@
---
+
 -- Notion main configuration file
 --
 -- This file only includes some settings that are rather frequently altered.
@@ -87,8 +87,9 @@ dopath("mod_query")
 dopath("mod_menu")
 dopath("mod_tiling")
 --Allow dock to run embedded. See cfg_dock.lua
-dopath("mod_statusbar")
---dopath("mod_dock")
+--Note cant have embedded dock and status bar
+--dopath("mod_statusbar")
+dopath("mod_dock")
 dopath("mod_sp")
 
 
@@ -137,3 +138,30 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."W", "ioncore.exec_on(_, XBROWSER or 'firefox')"),
 })
 
+-- Bindings for the tilings. 
+-- cfg_tiling.lua
+
+defbindings("WTiling", {
+    bdoc("Split current frame vertically."),
+    kpress(META.."S", "WTiling.split_at(_, _sub, 'bottom', true)"),
+    bdoc("Split current frame horizontally."),
+    kpress(META.."Shift+S", "WTiling.split_at(_, _sub, 'right', true)"),
+    
+    bdoc("Go to frame above/below/right/left of current frame."),
+    --kpress(META.."P", "ioncore.goto_next(_sub, 'up', {no_ascend=_})"),
+    --kpress(META.."N", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
+    --kpress(META.."Tab", "ioncore.goto_next(_sub, 'right')"),
+    kpress(META.."Up", "ioncore.goto_next(_sub, 'up', {no_ascend=_})"),
+    kpress(META.."Down", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
+    kpress(META.."Right", "ioncore.goto_next(_sub, 'right')"),
+    kpress(META.."Left", "ioncore.goto_next(_sub, 'left')"),
+    submap(META.."K", {
+        --kpress("Tab", "ioncore.goto_next(_sub, 'left')"),
+        
+        --bdoc("Split current frame horizontally."),
+        --kpress("S", "WTiling.split_at(_, _sub, 'right', true)"),
+        
+        bdoc("Destroy current frame."),
+        kpress("X", "WTiling.unsplit_at(_, _sub)"),
+    }),
+})
