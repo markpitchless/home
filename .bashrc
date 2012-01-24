@@ -80,7 +80,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -lFh'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -103,3 +103,14 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+# Run any other rc we might have
+if [ -d ~/.bashrc.d ]; then
+  for i in ~/.bashrc.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
