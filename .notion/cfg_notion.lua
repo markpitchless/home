@@ -112,6 +112,17 @@ defbindings("WMPlex.toplevel", {
 --
 -- Key bindings
 --
+-- See /usr/local/etc/notion/cfg_notioncore.lua for the defaults.
+
+-- WScreen context bindings
+-- The bindings in this context are available all the time.
+defbindings("WScreen", {
+    -- Workspaces, full screen client window
+    -- META+., META+. still active
+    bdoc("Switch to next/previous object (Workspaces, full screen client window) within current screen."),
+    kpress(META.."Control+Right", "WScreen.switch_prev(_)"),
+    kpress(META.."Control+Left", "WScreen.switch_next(_)"),
+})
 
 -- Frames for transient windows ignore this bindmap
 defbindings("WMPlex.toplevel", {
@@ -138,9 +149,26 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."W", "ioncore.exec_on(_, XBROWSER or 'firefox')"),
 })
 
+defbindings("WFrame.toplevel", {
+    bdoc("Query for a client window to attach."),
+    kpress(META.."A", "mod_query.query_attachclient(_)"),
+
+    -- Tabs!
+    bdoc("Switch to next/previous object within the frame."),
+    kpress(META.."Page_Up", "WFrame.switch_next(_)"),
+    kpress(META.."Page_Down", "WFrame.switch_prev(_)"),
+    bdoc("Move current object within the frame left/right."),
+    kpress(META.."Shift+Page_Up", "WFrame.dec_index(_, _sub)", "_sub:non-nil"),
+    kpress(META.."Shift+Page_Down", "WFrame.inc_index(_, _sub)", "_sub:non-nil"),
+
+    bdoc("Maximize the frame horizontally/vertically."),
+    kpress(META.."H", "WFrame.maximize_horiz(_)"),
+    kpress(META.."V", "WFrame.maximize_vert(_)"),
+})
+
+
 -- Bindings for the tilings. 
 -- cfg_tiling.lua
-
 defbindings("WTiling", {
     bdoc("Split current frame vertically."),
     kpress(META.."S", "WTiling.split_at(_, _sub, 'bottom', true)"),
@@ -164,4 +192,18 @@ defbindings("WTiling", {
         bdoc("Destroy current frame."),
         kpress("X", "WTiling.unsplit_at(_, _sub)"),
     }),
+})
+
+
+-- Ion mod_sp configuration file
+-- cfg_sp.lua
+
+defbindings("WScreen", {
+    -- Unbind default to free up Mod4+space for gnome-do
+    kpress(META.."space", nil),
+
+    -- Key left of 1. NB: This is not portable accross different keyboards. See
+    -- cfg_sp.lua for details
+    bdoc("Toggle scratchpad."),
+    kpress(META.."grave", "mod_sp.set_shown_on(_, 'toggle')"),
 })
