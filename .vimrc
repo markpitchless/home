@@ -206,6 +206,13 @@ set guioptions-=T
 filetype plugin on
 filetype indent on
 
+" xacro are xml macro files used by ROS
+au BufNewFile,BufRead *.xacro set filetype=xml
+" urdf are xml files from ROS - universal robot description format
+au BufNewFile,BufRead *.urdf set filetype=xml
+" ROS launch files
+au BufNewFile,BufRead *.launch set filetype=xml
+
 
 "
 " Folding
