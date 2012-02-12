@@ -155,11 +155,11 @@ defbindings("WFrame.toplevel", {
 
     -- Tabs!
     bdoc("Switch to next/previous object within the frame."),
-    kpress(META.."Page_Up", "WFrame.switch_next(_)"),
-    kpress(META.."Page_Down", "WFrame.switch_prev(_)"),
+    kpress(META.."Page_Down", "WFrame.switch_next(_)"),
+    kpress(META.."Page_Up", "WFrame.switch_prev(_)"),
     bdoc("Move current object within the frame left/right."),
-    kpress(META.."Shift+Page_Up", "WFrame.dec_index(_, _sub)", "_sub:non-nil"),
-    kpress(META.."Shift+Page_Down", "WFrame.inc_index(_, _sub)", "_sub:non-nil"),
+    kpress(META.."Shift+Page_Down", "WFrame.dec_index(_, _sub)", "_sub:non-nil"),
+    kpress(META.."Shift+Page_Up", "WFrame.inc_index(_, _sub)", "_sub:non-nil"),
 
     bdoc("Maximize the frame horizontally/vertically."),
     kpress(META.."H", "WFrame.maximize_horiz(_)"),
