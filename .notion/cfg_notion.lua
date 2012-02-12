@@ -88,8 +88,8 @@ dopath("mod_menu")
 dopath("mod_tiling")
 --Allow dock to run embedded. See cfg_dock.lua
 --Note cant have embedded dock and status bar
---dopath("mod_statusbar")
-dopath("mod_dock")
+dopath("mod_statusbar")
+--dopath("mod_dock")
 dopath("mod_sp")
 
 
@@ -174,7 +174,10 @@ defbindings("WTiling", {
     kpress(META.."S", "WTiling.split_at(_, _sub, 'bottom', true)"),
     bdoc("Split current frame horizontally."),
     kpress(META.."Shift+S", "WTiling.split_at(_, _sub, 'right', true)"),
-    
+
+    bdoc("Flip tiling."),
+    kpress(META.."F", "WTiling.flip_at(_, _sub)"),
+
     bdoc("Go to frame above/below/right/left of current frame."),
     --kpress(META.."P", "ioncore.goto_next(_sub, 'up', {no_ascend=_})"),
     --kpress(META.."N", "ioncore.goto_next(_sub, 'down', {no_ascend=_})"),
@@ -185,10 +188,10 @@ defbindings("WTiling", {
     kpress(META.."Left", "ioncore.goto_next(_sub, 'left')"),
     submap(META.."K", {
         --kpress("Tab", "ioncore.goto_next(_sub, 'left')"),
-        
+
         --bdoc("Split current frame horizontally."),
         --kpress("S", "WTiling.split_at(_, _sub, 'right', true)"),
-        
+
         bdoc("Destroy current frame."),
         kpress("X", "WTiling.unsplit_at(_, _sub)"),
     }),
