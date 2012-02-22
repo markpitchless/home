@@ -23,8 +23,9 @@ ALTMETA="Mod4+"
 -- Terminal emulator
 XTERM="gnome-terminal"
 
--- Browser. --mda
+-- Some more shell commands. --mda
 XBROWSER="firefox"
+XLOCK_SCREEN="xscreensaver-command -lock"
 
 -- Some basic settings
 ioncore.set{
@@ -147,6 +148,9 @@ defbindings("WMPlex.toplevel", {
 
     bdoc("Run a web browser."),
     kpress(META.."W", "ioncore.exec_on(_, XBROWSER or 'firefox')"),
+
+    --bdoc("Lock screen."),
+    --kpress(META.."L", "ioncore.exec_on(_, XLOCK_SCREEN or 'xlock')"),
 })
 
 defbindings("WFrame.toplevel", {
