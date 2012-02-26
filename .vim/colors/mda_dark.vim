@@ -1,5 +1,5 @@
 " Vim color file
-" Maintainer:   grommit <mark.addison@itn.co.uk>
+" Maintainer:   markpitchless <markpitchless@gmail.com>
 " Last Change:
 " URL:
 
@@ -99,6 +99,11 @@ hi Search	guifg=Yellow	guibg=bg	gui=bold,underline	ctermbg=magenta
 "hi Scrollbar
 "hi Tooltip
 
+" Current line highlight. Turn on with set cursorline
+" http://vim.wikia.com/wiki/Highlight_current_line
+hi CursorLine term=reverse ctermbg=0 cterm=None
+hi CursorLine guibg=#1A1824
+"hi CursorColumn
 
 "
 " syntax highlighting groups

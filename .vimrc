@@ -171,6 +171,28 @@ set formatoptions=tcqlrn
 syntax on
 colorscheme mda_dark
 
+" Highlight the current line (cursorline)
+" http://vim.wikia.com/wiki/Highlight_current_line
+set cursorline
+"set columnline
+"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+"To highlight the current line, and have the highlighting stay where it is when
+"the cursor is moved, use this mapping:
+"
+":nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+"
+"With the default backslash leader key, pressing \l will highlight the line
+"that currently contains the cursor. The mapping also sets mark l so you can
+"type 'l to return to the highlighted line. Enter :match to clear the
+"highlighting when finished.
+"
+"To highlight the current virtual column (column after tabs are expanded), and
+"have the highlighting stay where it is when the cursor is moved, use this
+"mapping:
+"
+":nnoremap <silent> <Leader>c :execute 'match Search /\%'.virtcol('.').'v/'<CR>
 
 
 "
