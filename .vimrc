@@ -212,7 +212,11 @@ map <F4> :emenu <C-Z>
 "=============================================================================
 
 "set guifontset=-*-Monospace-medium-r-normal--10-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-m-*-*-*,*
-set guifont=Monospace\ 9
+"set guifont=Monospace\ 9
+"This sets font to sans not Droid...
+"set guifont=Droid\ Sans\ Mono\ 9,Monospace\ 9
+"...but this works. wtf?
+set guifont=Droid\ Sans\ Mono\ 9
 " No toolbar
 set guioptions-=T
 
@@ -227,6 +231,13 @@ set guioptions-=T
 " let myscriptsfile = "~/.vim/scripts.vim"
 filetype plugin on
 filetype indent on
+
+" xacro are xml macro files used by ROS
+au BufNewFile,BufRead *.xacro set filetype=xml
+" urdf are xml files from ROS - universal robot description format
+au BufNewFile,BufRead *.urdf set filetype=xml
+" ROS launch files
+au BufNewFile,BufRead *.launch set filetype=xml
 
 
 "
