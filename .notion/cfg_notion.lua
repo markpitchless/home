@@ -44,7 +44,7 @@ ioncore.set{
 
     -- Movement commands warp the pointer to frames instead of just
     -- changing focus. Enabled by default.
-    --warp=true,
+    warp=true,
     
     -- Switch frames to display newly mapped windows
     --switchto=true,
@@ -58,7 +58,7 @@ ioncore.set{
     --unsqueeze=true,
     
     -- Display notification tooltips for activity on hidden workspace.
-    --screen_notify=true,
+    screen_notify=true,
 }
 
 -- mda: load the xinirama plugin
@@ -89,8 +89,8 @@ dopath("mod_menu")
 dopath("mod_tiling")
 --Allow dock to run embedded. See cfg_dock.lua
 --Note cant have embedded dock and status bar
-dopath("mod_statusbar")
---dopath("mod_dock")
+--dopath("mod_statusbar")
+dopath("mod_dock")
 dopath("mod_sp")
 
 
