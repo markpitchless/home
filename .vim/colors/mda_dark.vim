@@ -1,6 +1,6 @@
 " Vim color file
 " Maintainer:   markpitchless <markpitchless@gmail.com>
-" Last Change:
+" Last Change:  27th Feb 2012
 " URL:
 
 " cool help screens
@@ -29,7 +29,7 @@ let g:colors_name="mda_dark"
 "hi Normal guifg=#ECECEC	guibg=#000020	ctermfg=White ctermbg=Black	term=NONE
 " Use gnome-terminal transparent color for ctermbg
 hi clear Normal
-hi Normal   guifg=#ECECEC   guibg=#000020	ctermbg=9   ctermfg=Grey term=NONE
+hi Normal   guifg=#ECECEC   guibg=#000010	ctermbg=9   ctermfg=Grey term=NONE
 
 " TODO: Add font settings
 
@@ -55,7 +55,7 @@ hi User1 guibg=#5B176E guifg=#EFEF0A
 "hi LineNr
 "hi Folded     guibg=#443F5E   guifg=#CCCCCC   gui=NONE
 "hi FoldColumn guibg=#443F5E   guifg=#CCCCCC   gui=NONE
-hi Folded     guibg=#1A1824   guifg=#CCCCCC   gui=NONE ctermfg=DarkMagenta ctermbg=DarkGrey
+hi Folded     guibg=#1A1824   guifg=#AAAAAA   gui=NONE ctermfg=DarkMagenta ctermbg=DarkGrey
 hi FoldColumn guibg=#1A1824   guifg=#CCCCCC   gui=NONE ctermfg=DarkMagenta ctermbg=DarkGrey
 "hi WildMenu
 
@@ -76,6 +76,7 @@ hi ErrorMsg	guifg=Red	guibg=Black	gui=bold
 " Visual mode and search
 "
 hi Visual		guibg=Yellow	guifg=bg	gui=NONE
+"hi Visual		gui=reverse
 "hi Visual		guibg=bg	guifg=Yellow	gui=Bold,Underline
 "hi VisualNOS
 	" Visual selection when VIM doesn't own the selection. Only X11 gui and
@@ -84,7 +85,7 @@ hi IncSearch	guifg=#FDC600	guibg=bg	gui=underline,bold	ctermbg=magenta
 hi Search	guifg=Yellow	guibg=bg	gui=bold,underline	ctermbg=magenta
 
 "hi Title
-"hi Directory
+hi Directory	guifg=#C4A000	gui=NONE	ctermfg=DarkYellow
 
 " Diff colours
 "
@@ -110,21 +111,22 @@ hi CursorLine guibg=#1A1824
 "=============================================================================
 " See *group-name*
 
-hi Comment		guifg=#29B6FD	ctermfg=DarkBlue	term=bold
-hi Constant		guifg=#EA0F0F	ctermfg=DarkRed
+hi Comment		guifg=#2865A4	ctermfg=DarkBlue	term=bold
+hi Constant		guifg=#AC4303	ctermfg=DarkRed
 	" Sub-groups
-	"hi String
+	hi String guifg=#4E9A06 ctermfg=DarkGreen
 	"hi Character
 	"hi Number
 	"hi Boolean
 	"hi Float
-hi Identifier	guifg=#39FFFC	ctermfg=DarkCyan
-	"hi Function
+hi Identifier	guifg=#069898	ctermfg=DarkCyan
+	hi Function guifg=#75507B   ctermfg=DarkMagenta
+	hi perlMethod guifg=#75507B   ctermfg=DarkMagenta
 
 " TODO: Perl syntax highlights sub { as a statement but I want it as a
 " Function so I can add extra Bold hilights to it
 
-hi Statement	guifg=#F9E401	gui=NONE	ctermfg=DarkYellow
+hi Statement	guifg=#C4A000	gui=NONE	ctermfg=DarkYellow
 	"hi Conditional
 	"hi Repeat
 	"hi Label
@@ -137,6 +139,7 @@ hi PreProc		guifg=#F900ED	ctermfg=DarkMagenta
 	 "hi Macro
 	 "hi PreCondit
 hi Type			guifg=#2EF906	gui=NONE	ctermfg=DarkGreen
+"hi Type			guifg=#C600BD	gui=NONE	ctermfg=DarkGreen
 	 "hi StorageClass
 	 "hi Structure
 	 "hi Typedef
