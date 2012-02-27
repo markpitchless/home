@@ -1,0 +1,16 @@
+[user]
+	name = Mark Pitchless
+	email = markpitchless@gmail.com
+[core]
+	editor = vim
+[color]
+    ui = true
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+[color "diff"]
+	plain = white
+	meta = magenta reverse
+	frag = cyan
+	func = yellow
