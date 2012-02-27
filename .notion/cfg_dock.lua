@@ -21,7 +21,7 @@ mod_dock.create{
     -- Growth direction: left|right|up|down
     grow="down",
     -- Whether new dockapps should be added automatically to this dock
-    is_auto=true, 
+    is_auto=true,
     -- Show floating dock initially?
     floating_hidden=false,
     -- Name of the dock
@@ -36,7 +36,7 @@ defbindings("WScreen", {
 })
 
 
--- Dock settings menu. For this to work, mod_menu must have been loaded 
+-- Dock settings menu. For this to work, mod_menu must have been loaded
 -- previously.
 if mod_menu then
     defmenu("dock-settings", {
@@ -49,7 +49,7 @@ if mod_menu then
         menuentry("Grow-U", "_:set{grow='up'}"),
         menuentry("Grow-D", "_:set{grow='down'}"),
     })
-    
+
     defbindings("WDock", {
         mpress("Button3", "mod_menu.pmenu(_, _sub, 'dock-settings')"),
     })
