@@ -1,1 +1,2 @@
+# Extra R.O.S file types.
 --type-set=ros=.launch,.msg,.srv
