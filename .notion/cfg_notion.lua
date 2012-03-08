@@ -19,9 +19,12 @@
 META="Mod4+"
 -- Give the F keys back to apps
 ALTMETA="Mod4+"
+-- Give the alt key a name
+ALT="Mod1+"
 
 -- Terminal emulator
-XTERM="gnome-terminal"
+--XTERM="gnome-terminal"
+XTERM="xfce4-terminal"
 
 -- Some more shell commands. --mda
 XBROWSER="firefox"
@@ -123,6 +126,19 @@ defbindings("WScreen", {
     bdoc("Switch to next/previous object (Workspaces, full screen client window) within current screen."),
     kpress(META.."Control+Right", "WScreen.switch_prev(_)"),
     kpress(META.."Control+Left", "WScreen.switch_next(_)"),
+
+    -- Should we unbind the old?
+    bdoc("Go to n:th screen on multihead setup."),
+    kpress(META..ALT.."1", "ioncore.goto_nth_screen(0)"),
+    kpress(META..ALT.."2", "ioncore.goto_nth_screen(1)"),
+    kpress(META..ALT.."3", "ioncore.goto_nth_screen(2)"),
+    kpress(META..ALT.."4", "ioncore.goto_nth_screen(3)"),
+    kpress(META..ALT.."5", "ioncore.goto_nth_screen(4)"),
+    kpress(META..ALT.."6", "ioncore.goto_nth_screen(5)"),
+    -- Should we unbind the old?
+    bdoc("Go to next/previous screen on multihead setup."),
+    kpress(META..ALT.."Left", "ioncore.goto_prev_screen()"),
+    kpress(META..ALT.."Right", "ioncore.goto_next_screen()"),
 })
 
 -- Frames for transient windows ignore this bindmap
@@ -214,3 +230,5 @@ defbindings("WScreen", {
     bdoc("Toggle scratchpad."),
     kpress(META.."grave", "mod_sp.set_shown_on(_, 'toggle')"),
 })
+
+os.execute("~/.notion/startup.sh")
