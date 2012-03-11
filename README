@@ -5,3 +5,12 @@
 Putting my home dir (profile) under git control.
 
 https://github.com/markpitchless/home
+
+== Setup ==
+
+Want this to go into home, so need to be careful to copy the dot files
+properly. e.g. for user in /home/mda
+
+ git clone git@github.com:markpitchless/home.git /tmp/mda
+ cp -a /tmp/mda /home
+ rm -rf /tmp/mda
