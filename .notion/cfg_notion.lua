@@ -231,4 +231,66 @@ defbindings("WScreen", {
     kpress(META.."grave", "mod_sp.set_shown_on(_, 'toggle')"),
 })
 
-os.execute("~/.notion/startup.sh")
+--
+-- WinProps - Map apps to specific frames etc
+--
+-- http://sourceforge.net/apps/mediawiki/notion/index.php?title=Tour#Specifying_that_a_certain_program_should_always_be_in_a_certain_frame
+-- http://notion.sourceforge.net/notionconf/node4.html#SECTION00450000000000000000
+
+defwinprop {
+    class    = "Zim",
+    instance = "zim",
+    target   = "ZimFrame",
+}
+
+--
+-- Layouts
+-- See cfg_layouts.lua
+--
+
+-- Tiled frame template for the layouts below
+local a_frame = {
+    type="WSplitRegion",
+    regparams = {
+        type = "WFrame",
+        frame_style = "frame-tiled"
+    }
+}
+
+-- Helper function for generating splits for layouts
+local function mksplit(dir, tl, br, float)
+    return {
+        type = (float and "WSplitFloat" or "WSplitSplit"),
+        dir = dir,
+        tls = 1,
+        brs = 1,
+        tl = tl,
+        br = br,
+    }
+end
+
+local function mktiling(split_tree)
+    return {
+        managed = {
+            {
+                type = "WTiling",
+                bottom = true, -- Make it the bottom of the group
+                split_tree = split_tree,
+            }
+        }
+    }
+end
+
+-- Tiling for coding. One long area for left col (for editor) and a vsplit on
+-- the right col (terms, browsers etc).
+ioncore.deflayout("Coding",
+    mktiling(
+        mksplit("horizontal", a_frame, mksplit("vertical", a_frame, a_frame))
+    )
+)
+
+
+--
+-- Start some programs
+--
+os.execute("~/.notion/startup.sh 1>~/.notion/startup.log 2>&1")
