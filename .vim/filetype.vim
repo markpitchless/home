@@ -19,6 +19,20 @@ endif
 "augroup END
 
 "
+" Fish
+"
+augroup fish
+    au! BufRead,BufNewFile *.fish   setfiletype sh
+augroup END
+
+"
+" ROS
+"
+augroup ros
+    au! BufRead,BufNewFile *.rosinstall   setfiletype yaml
+augroup END
+
+"
 " Template Toolkit
 "
 
