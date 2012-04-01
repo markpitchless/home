@@ -14,3 +14,8 @@
 	meta = magenta reverse
 	frag = cyan
 	func = yellow
+[merge]
+    conflictstyle = diff3
+[alias]
+	undo-commit = reset --soft HEAD^
+	redo-commit = commit -a -c ORIG_HEAD
