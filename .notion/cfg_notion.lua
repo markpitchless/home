@@ -165,8 +165,8 @@ defbindings("WMPlex.toplevel", {
     bdoc("Run a web browser."),
     kpress(META.."W", "ioncore.exec_on(_, XBROWSER or 'firefox')"),
 
-    --bdoc("Lock screen."),
-    --kpress(META.."L", "ioncore.exec_on(_, XLOCK_SCREEN or 'xlock')"),
+    bdoc("Lock screen."),
+    kpress(META.."L", "ioncore.exec_on(_, XLOCK_SCREEN or 'xlock')"),
 })
 
 defbindings("WFrame.toplevel", {
