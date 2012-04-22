@@ -24,4 +24,6 @@ VirtualBox VMs
 .cache/
 .sudo_as_admin_successful
 .viminfo
-*
+.notion/default-session-*/
+.notion/startup.log
+
