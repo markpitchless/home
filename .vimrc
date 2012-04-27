@@ -80,7 +80,7 @@ set incsearch           " and show part matches
 " font,guifb and guibg have any effect.
 " Set colour with %1*. which sets User1. %* or %0*. resets to normal
 " See mda_dark colour scheme for the User1 used here
-set statusline=<%n>\ %1*\ %f\ %*%r%m\ %y%<\ %=\ (%l/%L,%c%V)\ %P
+set statusline=<%n>\ %1*\ %-0.50f\ %*%r%m\ %y%<\ %=\ (%l/%L,%c%V)\ %P
 
 " Show partial command in status line
 set showcmd
