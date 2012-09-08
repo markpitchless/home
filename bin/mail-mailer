@@ -1,0 +1,64 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use Getopt::Long;
+use Pod::Usage;
+use Mail::Mailer;
+
+my ($help, $man);
+
+# Options with defaults
+my $mailer  = 'mail';
+my $from    = "";
+my $to      = "";
+my $subject = "";
+
+# Options
+GetOptions(
+    'help|h|?'    => \$help,
+    'man'         => \$man,
+    'mailer=s'    => \$mailer,
+    'from|f=s'    => \$from,
+    'to|t=s'      => \$to,
+    'subject|s=s' => \$subject,
+) or pod2usage(2);
+pod2usage(1) if $help;
+pod2usage( -exitstatus => 0, -verbose => 2 ) if $man;
+
+die "Can't send with out to address (-t)\n" unless $to;
+
+my $body;
+while (<>) {
+    $body .= $_;
+}
+
+my $mm = Mail::Mailer->new( $mailer );
+my %headers = (
+    From    => $from,
+    To      => $to,
+    Subject => $subject,
+);
+$mm->open( \%headers ) or die "Can't open mailer: $!\n";
+print $mm $body;
+$mm->close() or die "Failed to close mailer: $!\n";
+
+
+=pod
+
+=head1 TITLE
+
+mail-mailer - command line interface to perl Mail::Mailer module.
+
+=head1 SYNOPSIS
+
+=head1 SEE ALSO
+
+L<perl(1)>, L<Mail::Mailer>
+
+=head1 AUTHOR
+
+Mark Addison mda <at> digitalworkhop.net. Really, the Mail::Mailer team did
+most of the work, cheers.
+
+=cut

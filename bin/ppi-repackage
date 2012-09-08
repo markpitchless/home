@@ -1,0 +1,285 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use 5.010;
+use Getopt::Long;
+use Pod::Usage;
+use PPI;
+use Badger::Filesystem 'File Dir';
+
+# Options with defaults
+my ($help, $man);
+my $debug    = 0;
+my $package  = "";
+my $as       = "";
+my $rebase   = 0;
+my $dry_run  = 0;
+my $inplace  = 0;
+my $git      = 0;
+
+# Options
+GetOptions(
+    'help|h|?'            => \$help,
+    'man'                 => \$man,
+    'debug'               => \$debug,
+    'package|pkg=s'       => \$package,
+    'as=s'                => \$as,
+    'rebase'              => \$rebase,
+    'dry_run|dry-run|dry' => \$dry_run,
+    'inplace|i'           => \$inplace,
+    'git'                 => \$git,
+) or pod2usage(2);
+pod2usage(1) if $help;
+pod2usage( -exitstatus => 0, -verbose => 2 ) if $man;
+
+pod2usage("Need a source package") unless $package;
+pod2usage("Need a target package") unless $as;
+
+# Append :: to src pkg to imply rebase
+if ( $package =~ m/::$/ ) {
+    $rebase = 1;
+    $package =~ s/::$//;
+}
+
+@ARGV = '.' unless @ARGV;
+
+# Get all files to check from ARGV, a list of files to process or dirs to search.
+my @files;
+foreach (@ARGV) {
+    if ( -d $_ ) {
+        push @files, Dir($_)->visit({
+            #files   => 1, # collect files
+            # .tt ?
+            # What about bin files?
+            files   => ['*.pm', '*.pl', '*.t', '*.pod'],
+            dirs    => 0, # dont collect dirs
+            in_dirs => 1, # but do look in them
+            not_in_dirs => ['.svn', '.hg', '.git', '.cvs', 'blib', '_build'],
+        })->collect;
+    }
+    else {
+        push @files, File($_);
+    }
+}
+if ($debug) { say "File:$_" for @files };
+
+# Update the package name in all the files.
+FILE: for my $file (@files) {
+    #$file->collapse;
+    #Can't call method "filesystem" without a package or object reference at #/usr/local/share/perl/5.10.0/Badger/Filesystem/Path.pm line 186
+    my $doc     = PPI::Document->new("$file");
+    my $outfile = $file;
+    my $search  = $rebase 
+        ? qr/$package(?=::)?/ 
+        : qr/$package(?!::)/; 
+    
+    my $is_package_file = 0; # Is this file the one that defines the package
+    (my $pkg_path = $package) =~ s!::!/!g;
+    my $path_m = $rebase
+        ? qr{$pkg_path/(\w+/)*\w+\.pm}
+        : qr{$pkg_path\.pm$};
+    my ($package_statement) = grep { $_->file_scoped }
+        @{ $doc->find("PPI::Statement::Package") || [] };
+    if (
+        $package_statement
+        && $package_statement->namespace =~ $search
+        && $file =~ $path_m
+    ) {
+        # Processing the file that defines the package. We need to move it (by
+        # changing the outfile, so it gets written to new location).
+        $is_package_file = 1;
+        (my $as_path = $as) =~ s!::!/!g;
+        my $new_path = "$file";
+        $new_path    =~ s{$pkg_path}{$as_path};
+        $outfile     = File( $new_path );
+    }
+
+    # Find any nodes that contain the package name.
+    # For filter for the nodes that we can actually edit.
+    my $nodes = $doc->find( sub {
+        my $nod = $_[1];
+        my $found = 0;
+        unless ( $nod->isa('PPI::Token::Whitespace') ) { # Ignore whitespace etc
+            foreach my $foo (qw(
+                PPI::Token::Word
+                PPI::Token::Pod
+                PPI::Token::Quote
+                PPI::Token::Comment
+            )) {
+                if ( $nod->isa($foo) ) {
+                    $found = 1 if $nod->content ~~ m/$package/;
+                };
+            }
+        }
+        $found;
+    });
+
+    next FILE unless $nodes;
+    
+    if ($debug) { say $file; debug_nodes($nodes) };
+    
+    # Edit the node
+    my $num_changes = 0;
+    foreach my $nod (@$nodes) {
+        my $content = $nod->content;
+        my $changes;
+        if ( $changes = $content =~ s/$search/$as/g ) {
+            $nod->set_content($content);
+            $num_changes += $changes;
+        } 
+    }
+    
+    if ($debug) { say $file; debug_nodes($nodes) };
+
+    next FILE unless $num_changes;
+    
+    # Write out changes to new file or inplace with backup.
+    $outfile = File("$outfile.new") if !$inplace;
+    unless ( $dry_run ) {
+        $outfile->parent->create unless $outfile->parent->exists;
+        if ( $inplace ) {
+            $file->copy("$file.bak");
+            if ( $is_package_file ) {
+                if ( $git && $outfile ne $file ) {
+                    # Tell git we are moving the file. Git will mv and we will
+                    # then overwrite later own with changes.
+                    my @args = ('git', 'mv', "$file", "$outfile");
+                    unless ( system(@args) == 0 ) {
+                        say "@args failed: $?";
+                        next FILE;
+                    }
+                    say "@args";
+                }
+                else {
+                    $file->delete;
+                    say "Deleted $file";
+                }
+            }
+        }
+        $doc->save($outfile) || say "Error writing $outfile : $!";
+    }
+    say "Updated $outfile ($num_changes changes)";
+}
+
+sub debug_nodes {
+    my $nodes = shift;
+    my $line = 0;
+    foreach (@$nodes) {
+        say ++$line, ": ",ref($_)," $_"; 
+    }
+}
+
+__END__
+
+=pod
+
+=head1 NAME
+
+ ppi-repackage - Repackage perl. 
+
+=head1 SYNOPSIS
+
+ ppi-repackage --pkg=PACKAGE --as=PACKAGE [-i] [--git] FILES|DIRS
+
+=head1 DESCRIPTION
+
+Re-package perl. Rename a perl package by moving it's file and/or updating
+references to the package name in perl source.
+
+=head1 OPTIONS
+
+=over 4
+
+=item --help -h -?
+
+Show usage info.
+
+=item --man
+
+Show the man page.
+
+=item --package  --pkg
+
+The source package to re-package.
+
+=item --as
+
+The target package toi repackage the source into.
+Post fix with :: to implie rebase option.
+
+=item --rebase
+
+Treat the source package name as the base of a package to move.
+
+If the package is Foo and no rebase then only the package explicity named Foo
+is moved, Foo::Bar, Foo::Bar::Baz etc are left alone. So if as was Hello, we
+would get Foo -> Hello and the rest stay the same.
+
+With rebase all the sub packages also get repackaged. So we would get Foo ->
+Hello, Foo::Bar -> Hello::Bar, Foo::Bar::Baz -> Hello::Bar::Baz.
+
+=item --inline  -i
+
+Normally changes are written the origional file name with .new appended. Set
+this option to write the changes back to the origional file, making a back up
+using file name with .bak appended.
+
+=item --git
+
+Treat files as being git controlled. When moving the file that defines the
+package, we tell git. No git adding or commit as yet, you need todo that.
+
+=back
+
+=head1 EXAMPLES
+
+ ppi-repackage --package=NuFoo::Core::Role::TT --as=NuFoo::Role::TT lib/
+
+ ppi-repackage --pkg NuFoo::Core::Cmd::Logger -as Log::Any::Adapter::Term --git --inplace
+
+ ppi-repackage --pkg NuFoo::Core:: -as NuFoo --git --inplace . bin/nufoo nufoo/NuFoo/NuFoo/Builder/see_also.pod.tt
+
+=head1 SEE ALSO
+
+L<perl>.
+
+=head1 BUGS
+
+All complex software has bugs lurking in it, and this module is no exception.
+Please report bugs to the author.
+
+=head2 Pod Sections
+
+Example of packge name missed. Log::Ang::Adapter::Term::LEVEL_COLOR should have
+been changed to NuFoo::LogAnyAdapter.
+
+    =head2 Changing colors
+
+    There is no formal mechanism for changing the colours used at the moment. They
+    are stored in C<%Log::Ang::Adapter::Term::LEVEL_COLOR>, with a key of log level
+    and a value of an array ref of color names to give to L<Term::ANSIColor>. So
+    just hack that to change the colors. This may well change in a future version.
+
+=head1 ACKNOWLEDGEMENTS
+
+Big thanks to the PPI developers for making this possible.
+
+=head1 AUTHOR
+
+Mark Pitchless, C<< <markpitchless at gmail.com> >>
+
+=head1 COPYRIGHT
+
+Copyright 2010 Mark Pitchless
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
+=cut
+

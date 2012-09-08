@@ -1,0 +1,244 @@
+#!/bin/bash
+#
+# Checks version of glibc and stuff.
+#
+# Pulled from the install script for the ATI Radeon drivers for Linux/x86(IA32) with XFree 4.x
+#
+
+# projects name
+MODULE=fglrx
+
+# strings
+VENDOR_TEXT="ATI Technologies"
+MODULE_SPACED="ATI Radeon 8500, FireGL 8700/8800"
+
+# file names
+DRM_LIB_PREFIX=lib${MODULE}drm
+IP_LIB_PREFIX=lib${MODULE}_ip
+
+# script insertion markers
+MODULE_UPPER=FGLRX
+
+
+# general locations
+HERE=`pwd`
+XXX="$HERE"/XXX
+
+i=0
+i=$(($i+`echo "$HERE" | grep -c \ `))
+i=$(($i+`echo "$HERE" | grep -c \*`))
+i=$(($i+`echo "$HERE" | grep -c \\\\\\\\`))
+i=$(($i+`echo "$HERE" | grep -c \"`))
+i=$(($i+`echo "$HERE" | grep -c \'`))
+i=$(($i+`echo "$HERE" | grep -c \\\``))
+if [ $i -ne 0 ];
+then
+  echo "Path to current working directory contains critical caracters"
+  echo "like asterisk, backslash, quotes or spaces. Since some system"
+  echo "tools wont cope with that situation this script will abort now."
+  exit 1
+fi
+
+
+# xfree locations
+XF_ROOT=/usr/X11R6
+XF_BIN=$XF_ROOT/bin
+XF_LIB=$XF_ROOT/lib
+XF_MOD=$XF_LIB/modules
+XF_DRV=$XF_MOD/drivers
+XF_DRI=$XF_MOD/dri
+XF_LIN=$XF_MOD/linux
+XF_EXT=$XF_MOD/extensions
+
+# system locations
+OS_MOD=/lib/modules
+USR_LIB=/usr/lib
+
+# list of dirs that are used for verifying xfree 4.x presence
+XFREEDIRS="$XF_BIN \
+           $XF_LIN \
+           $XF_DRV \
+           $XF_EXT \
+	  "
+
+# list of dirs that are used for verifying xfree 4.x presence
+XFREEFILES="$XF_BIN/XFree86 \
+           "
+
+# vendor options - tightly related to supplied package contents - do not change!
+INSTALL_LIBGL=0
+INSTALL_LIBGL_V2=1
+INSTALL_MODULE_SUBDIRS=0
+INSTALL_INIT_SERVICE=0
+INSTALL_MODULE_MAKE_INSTALL=1
+INSTALL_LIBPATH=0
+
+# shell script defaults
+OPTION_FORCE=0
+OPTION_QUERY=1
+
+
+# shell script subroutines
+GetOsInfo()
+{
+	echo "Checking which OS you're running..."
+
+	OS_ame="`uname`"
+	OsVersion="`uname -r`"
+	case "$OS_ame" in
+	SunOS) # Assumes SunOS 5.x
+		OsArch="`uname -p`"
+		;;
+	*)
+		OsArch="`uname -m`"
+		;;
+	esac
+	# Some SVR4.0 versions have a buggy uname that reports the node name
+	# for the OS name.  Try to catch that here.  Need to check what is
+	# reported for non-buggy versions.
+	if [ "$OS_ame" = "`uname -n`" -a -f /stand/unix ]; then
+		OS_ame=UNIX_SV
+	fi
+	echo "uname reports '$OS_ame' version '$OsVersion', architecture '$OsArch'."
+
+	# Find the object type, where needed
+
+	case "$OS_ame" in
+	Linux|FreeBSD|NetBSD)
+		if file -L /bin/sh | grep ELF > /dev/null 2>&1; then
+			OsObjFormat=ELF
+		else
+			OsObjFormat=a.out
+		fi
+		;;
+	esac
+
+	if [ X"$OsObjFormat" != X ]; then
+        echo "Object format is '$OsObjFormat'."
+		needNL=YES
+	fi
+
+	# test's flag for symlinks
+	#
+	# For OSs that don't support symlinks, choose a type that is guaranteed to
+	# return false for regular files and directories.
+
+	case "$OS_ame" in
+	FreeBSD)
+		case "$OsVersion" in
+		2.*)
+			L="-h"
+			;;
+		*)
+			L="-L"
+		esac
+		;;
+	OS-with-no-symlinks)	# Need to set this correctly
+		L="-b"
+		NoSymlinks=YES
+		;;
+	*)
+		L="-L"
+		;;
+	esac
+
+	# Find the libc version, where needed
+	case "$OS_ame" in
+	Linux)
+		tmp="`ldd /bin/sh | grep libc.so 2> /dev/null`"
+		LibcPath=`expr "$tmp" : '[^/]*\(/[^ ]*\)'`
+		tmp="`strings $LibcPath | grep -i 'c library'`"
+		OsLibcMajor=`expr "$tmp" : '.* \([0-9][0-9]*\)'`
+		OsLibcMinor=`expr "$tmp" : '.* [0-9][0-9]*\.\([0-9][0-9]*\)'`
+		case "$OsLibcMajor" in
+		2)
+			# 2 is the glibc version
+			OsLibcMajor=6
+			;;
+		esac
+		;;
+	esac
+
+	if [ X"$OsLibcMajor" != X ]; then
+		if [ X"$OsLibcMinor" != X ]; then
+			echo "libc version is '$OsLibcMajor.$OsLibcMinor'."
+		else
+			echo "libc version is '$OsLibcMajor'."
+		fi
+		needNL=YES
+	fi
+	if [ X"$needNL" = XYES ]; then
+		echo ""
+	fi
+#   echo ""
+}
+
+GetXfreeInfo()
+{
+    if [ $chk_env -eq 0 ]
+    then
+      FILE=$XF_BIN/XFree86
+    else
+      FILE=../../xc/programs/Xserver/XFree86
+    fi
+
+    x_ver_line=`$FILE -version 2>&1 | grep "XFree86 Version"`
+    x_ver=`echo "$x_ver_line" | cut -d' ' -f3`
+
+    if [ "$x_ver" = "" ]
+    then
+      echo "Unable to determine XFree86 Version. Stopping now."
+      echo ""
+      exit 1
+    fi
+
+    if [ $chk_env -eq 0 ]
+    then
+      echo "XFree86 Version $x_ver is installed."
+    else
+      echo "XFree86 Version $x_ver was found in your current source environment."
+    fi
+    echo ""
+
+    # some post processing of our main result
+    X_4_0=0
+    X_4_1=0
+    X_4_2=0
+    X_good=0
+    if [ `echo "$x_ver" | grep -c '^4\.0\.[23]$'` -gt 0 ]
+    then
+      X_4_0=1
+      X_good=1
+    fi
+    if [ `echo "$x_ver" | grep -c '^4\.0\.99'` -gt 0 ]
+    then
+      X_4_1=1
+      X_good=1
+    fi
+    if [ `echo "$x_ver" | grep -c '^4\.1\.0'` -gt 0 ]
+    then
+      X_4_1=1
+      X_good=1
+    fi
+    if [ `echo "$x_ver" | grep -c '^4\.2\.0'` -gt 0 ]
+    then
+      X_4_2=1
+      X_good=1
+    fi
+}
+
+
+#begin of main script
+echo -e "====================================================================="   
+echo -e "\033[31m $VENDOR_TEXT \033[0m"                               
+echo -e "====================================================================="   
+
+# test for commandline arguments
+chk_env=0
+if [ "$1" = "-check-environment" ]; then
+  chk_env=1
+fi
+
+# perform a basic system analysis
+GetOsInfo
+GetXfreeInfo

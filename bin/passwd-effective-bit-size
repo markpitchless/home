@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use Getopt::Long;
+use Pod::Usage;
+
+my ($help, $man);
+
+# Number of different chars password can use.
+my $num_chars = 93;
+
+# Options
+GetOptions(
+    'help|h|?'    => \$help,
+    'man'         => \$man,
+    'num_chars=s' => \$num_chars,
+) or pod2usage(2);
+pod2usage(1) if $help;
+pod2usage( -exitstatus => 0, -verbose => 2 ) if $man;
+
+my $password = shift @ARGV;
+
+print entropy_bits( $num_chars, length($password) );
+
+# http://safari5.bvdep.com/0735617228/idasipt#X2ludGVybmFsX1RvYz94bWxpZD0wNzM1NjE3MjI4L0lEQU0xUFQ=
+sub entropy_bits {
+    my ($num_values, $size) = @_;
+    return 0 unless $num_values > 0;
+    return $size * log($num_values);
+}

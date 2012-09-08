@@ -1,0 +1,10 @@
+#!/bin/bash
+
+basedir=$(pwd)
+for file in $(find . -type d -name '.bzr'); do
+    dir=$(dirname "$file")
+    echo "## $dir ##"
+    cd "$basedir"
+    cd "$dir"
+    bzr pull
+done

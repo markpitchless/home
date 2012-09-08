@@ -1,0 +1,15 @@
+#!/bin/bash
+
+IFS=$(echo -en "\n\b")
+startdir=`pwd`
+for dir in `find . -type d`
+do
+    if [ $dir == '.' ]
+    then
+        continue
+    fi
+    echo Dir:$dir
+    cd "$startdir"
+    cd "$dir"
+    find . -iname '*.zip' -exec unzip "{}" \;
+done

@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+#
+# Command line gmail tool, so gmail can be used as default email client.
+# Origional code thanks to:
+# http://do.davebsd.com/wiki/GMail_Plugin#Set_Google_Apps_For_Your_Domain_mail_as_Preferred_E-mail_Client
+#
+
+use URI::Escape;
+$to = shift;
+if ($to =~ /^([^\?]+)\?(.*)$/) {
+	$to=$1;
+	$args="&".$2;
+	$args=~s/\&subject=/&su=/;
+}
+$to =~ s/^mailto://i;
+#exec("firefox","https://mail.google.com/mail/?ui=2&fs=1&view=cm&to=".URI::Escape::uri_escape($to).$args);
+#exec("firefox","https://mail.google.com/mail/?view=cm&fs=1&tf=1&cmid=22&to=".URI::Escape::uri_escape($to).$args)
+exec("chromium-browser","--app=https://mail.google.com/mail/?ui=2&fs=1&view=cm&to=".URI::Escape::uri_escape($to).$args);
+#exec("chromium-browser", "--app=https://mail.google.com/mail/?view=cm&fs=1&tf=1&cmid=22&to=".URI::Escape::uri_escape($to).$args)
