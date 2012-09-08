@@ -88,6 +88,14 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# Setup a symlink for the .screenrc to use for the agent. Allows re-connect of
+# the agent after screen session disconects.
+# Don't link if auth sock *is* the symlink, which happens inside the screen.
+# http://superuser.com/questions/180148/how-do-you-get-screen-to-automatically-connect-to-the-current-ssh-agent-when-re-a
+if test "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != ~/.ssh/ssh_auth_sock; then
+    ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
