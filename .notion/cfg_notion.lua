@@ -237,11 +237,18 @@ defbindings("WScreen", {
 -- http://sourceforge.net/apps/mediawiki/notion/index.php?title=Tour#Specifying_that_a_certain_program_should_always_be_in_a_certain_frame
 -- http://notion.sourceforge.net/notionconf/node4.html#SECTION00450000000000000000
 
-defwinprop {
-    class    = "Zim",
-    instance = "zim",
-    target   = "ZimFrame",
-}
+--defwinprop {
+--    class    = "Zim",
+--    instance = "zim",
+--    target   = "ZimFrame",
+--}
+
+-- of apps don't set enough props to be able to match them
+--defwinprop {
+--    class   = "",
+--    name    = "kinectGui",
+--    target  = "OfApp",
+--}
 
 --
 -- Layouts
