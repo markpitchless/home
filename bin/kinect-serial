@@ -1,0 +1,4 @@
+#!/bin/bash
+# http://stackoverflow.com/questions/8988090/how-can-i-get-the-kinect-serial-number-with-openni
+
+lsusb -v -d 045e:02ae | grep -e "Bus\|iSerial"
