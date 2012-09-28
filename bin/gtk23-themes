@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#https://wiki.archlinux.org/index.php/GTK%2B
+find $(find ~/.themes /usr/share/themes/ -wholename "*/gtk-3.0" | sed -e "s/^\(.*\)\/gtk-3.0$/\1/") -wholename "*/gtk-2.0" | sed -e "s/.*\/\(.*\)\/gtk-2.0/\1"/

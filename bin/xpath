@@ -1,0 +1,95 @@
+#!/usr/bin/perl -w
+
+=pod
+
+=head1 TITLE
+
+xpath - Command line xpath tool.
+
+=head1 SYNOPSIS
+
+ xpath XPATH FILE
+
+=head1 TODO
+
+Loads!
+
+* namespaces.
+ 
+=head1 AUTHOR
+
+mark.addison@itn.co.uk
+
+Origional code from "Perl and XML", O'Reilly Chap8.2, Example 8.6. Thanks :)
+
+=cut
+
+use strict;
+
+use Getopt::Long;
+use Pod::Usage;
+use XML::XPath;
+use XML::XPath::XMLParser;
+
+# Options
+#------------------------------------------------------------------------------
+
+my $debug;
+my $help;
+my @namespaces = ();
+
+GetOptions(
+    'd|debug'  => \$debug,
+    'h|help'   => \$help,
+    'ns|xmlns=s'     => \@namespaces,
+) or pod2usage(2);
+pod2usage(1) if $help;
+
+my $path  = shift @ARGV;
+my @files = @ARGV; # source files
+
+sub debug { return unless $debug;
+    warn "DEBUG ",@_;
+}
+
+# Main
+#------------------------------------------------------------------------------
+
+# Read the xml in
+undef $/;
+my $xmlsrc = <>;
+
+#
+# TODO
+#
+# Can we in some way pass a ref to <> into XML::XPath via its ioref option?
+#
+
+# create an object to parse the file and field XPath queries
+#my $xp = XML::XPath->new( filename => shift @files );
+my $xp = XML::XPath->new( xml => $xmlsrc );
+foreach (@namespaces) {
+    my ($prefix,$url) = m/(\w+):(.*)/;
+    $xp->set_namespace($prefix, $url);
+}
+
+# apply the path from the command line and get back a list matches
+print "$path\n";
+my $nodeset = $xp->find( $path );
+debug "found:$nodeset ref:".ref($nodeset)."\n";
+
+# print each node in the list
+if (
+    $nodeset->isa("XML::XPath::Literal")
+    or $nodeset->isa("XML::XPath::Number")
+    or $nodeset->isa("XML::XPath::Boolean")
+) {
+    print "".$nodeset. "\n";
+}
+else { # Assume nodeset
+    foreach my $node ( $nodeset->get_nodelist ) {
+        debug "NODE:$node ref:".ref($node)."\n";
+        print XML::XPath::XMLParser::as_string( $node ) . "\n";
+    }
+}
+

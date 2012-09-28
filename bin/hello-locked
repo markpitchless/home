@@ -1,0 +1,19 @@
+#!//usr/bin/env bash
+
+# How to lock file a process
+
+# http://sysadvent.blogspot.com/2008/12/day-9-lock-file-practices.html
+lockfile="/tmp/hello-locked.lock"
+if [ -z "$flock" ] ; then
+  lockopts="-w 0 $lockfile"
+  exec env flock=1 flock $lockopts $0 "$@"
+fi
+
+echo -n hello
+for i in {1..10}; do
+    sleep 1
+    echo -n .
+done
+echo world
+
+rm $lockfile

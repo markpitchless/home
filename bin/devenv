@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#
+# Setup dev ENV from current dir.
+#
+# DIST       - Set to PWD
+# PERL5LIB   - Adds ./lib if it exists
+# PATH       - Adds ./bin if it exists
+# PS1        - Adds a [D] to the prompt
+# CDPATH     - Adds DIST
+#
+# See ["Unix Shell Programming, 3rd Edition" P253] for stuff on subshells and
+# ENV
+
+#
+# Set up new env to export to new shell.
+# (cos we can't change the parent shell env)
+#
+
+DIST=$PWD
+if [ -d lib ]
+then
+	PERL5LIB=$PERL5LIB:$DIST/lib
+fi
+if [ -d bin ]
+then
+	PATH="$DIST/bin:$PATH"
+fi
+
+# TODO How do we set up completion on the CDPATH dirs?
+CDPATH=$CDPATH:$PWD
+
+# Add a flag to PS1 so we know we is in dev env
+# XXX: This is broken as our bashrc resets the prompt
+name=`basename $DIST`
+#PS1="\033]0;[$name] \u@\h:\w \007\[\033[01;35m\][$name] \u@\h \w\n$ \[\033[00m\]"
+PS1="\033]0;\u@\h:\w [$name] \007$(color ltmagenta)\u@\h $(color ltyellow)\w [$name]$(color off)\n$ "
+
+# What goes into our devenv
+export PS1 DIST PATH PERL5LIB PS1 CDPATH
+
+#
+# local test env?
+#
+localenv="./test.env"
+if [ -e $localenv ]; then
+    echo "sourcing $localenv"
+    . $localenv
+fi
+
+#
+# servers?
+#
+#sudo /etc/init.d/apache2 'start' \
+#&& sudo /etc/init.d/mysql 'start'
+
+#
+# Start a shell (with above env) to work in.
+#
+
+echo Starting devenv for "$DIST"
+#/bin/bash        # Start subshell. Use if you want to carry on running cmds in
+                  # this shell.
+exec $SHELL    # Replace current proc with new one.
+#echo Leaving devenv $DIST

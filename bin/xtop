@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/lib/xscreensaver/phosphor -program 'top' -scale 2 -delay 5000 &

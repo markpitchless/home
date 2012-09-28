@@ -1,0 +1,9 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+use HTML::WikiConverter;
+
+local $/ = undef; # slurp
+my $wc = new HTML::WikiConverter( dialect => 'MediaWiki' );
+print $wc->html2wiki( html => <> ), "\n";

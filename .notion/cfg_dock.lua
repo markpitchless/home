@@ -12,7 +12,8 @@ mod_dock.create{
     mode="embedded",
     --mode="floating",
     -- The screen to create the dock on
-    screen=0,
+    screen=1,
+    --screen=2,
     -- Corner or side of the screen to place the dock on.
     -- For embedded dock the valid values are: tl|tr|bl|br
     -- For floating dock the following are also valid: tc|bc|ml|mc|mr
