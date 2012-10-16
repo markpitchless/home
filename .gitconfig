@@ -17,5 +17,7 @@
 [merge]
     conflictstyle = diff3
 [alias]
+	co = checkout
+	stat = status
 	undo-commit = reset --soft HEAD^
 	redo-commit = commit -a -c ORIG_HEAD
