@@ -3,6 +3,7 @@
 	email = markpitchless@gmail.com
 [core]
 	editor = vim
+	excludesfile = /home/mark/.gitignore_global
 [color]
     ui = true
 	status = auto
