@@ -114,7 +114,7 @@ fi
 
 # Run any other rc we might have
 if [ -d ~/.bashrc.d ]; then
-  for i in ~/.bashrc.d/*.sh; do
+  for i in ~/.bashrc.d/*.{sh,bash}; do
     if [ -r $i ]; then
       . $i
     fi
