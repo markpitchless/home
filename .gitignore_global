@@ -1,5 +1,4 @@
-# Lots of useful templates here:
-# https://github.com/github/gitignore
+#https://help.github.com/articles/ignoring-files
 
 # Compiled source #
 ###################
@@ -9,8 +8,6 @@
 *.exe
 *.o
 *.so
-*.a
-*.py[cod]
 
 # Packages #
 ############
@@ -42,28 +39,41 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-# Backup files #
-#########################
-*.bak
-
-# Vim #
+# VIM #
 #######
-.*.sw[a-z]
+.*.s[a-w][a-z]
 *.un~
 Session.vim
 .netrwhist
+*~
 
-# CMake #
+# Emacs #
 #########
-CMakeCache.txt
-CMakeFiles
-Makefile
-cmake_install.cmake
-install_manifest.txt
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
 
-# Eclipse project files.
-# These contian lots of absolute paths.
-#########################################
-.cproject
+# Org-mode
+# .org-id-locations
+# *_archive
+
+
+# Backup and tmp files #
+########################
+*.tmp
+*.bak
+*.swp
+*.foo
+*.bar
+
+# Eclipse #
+###########
+*.pydevproject
 .project
-.pydevproject
+.metadata
+.cproject
