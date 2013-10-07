@@ -3,6 +3,7 @@
 	email = markpitchless@gmail.com
 [core]
 	editor = vim
+	excludesfile = /home/mda/.gitignore_global
 [color]
     ui = true
 	status = auto
@@ -11,9 +12,9 @@
 	diff = auto
 [color "diff"]
 	plain = white
-	meta = magenta reverse
+	meta = magenta
 	frag = cyan
-	func = yellow
+    func = yellow
 [merge]
     conflictstyle = diff3
 [alias]
@@ -21,3 +22,4 @@
 	stat = status
 	undo-commit = reset --soft HEAD^
 	redo-commit = commit -a -c ORIG_HEAD
+    logk = log --graph --decorate --pretty=oneline --abbrev-commit
