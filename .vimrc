@@ -27,6 +27,8 @@ set nocompatible
 "endif
 
 
+"set encoding=utf-8
+
 
 "
 " Read writing backup etc
@@ -41,6 +43,8 @@ set writebackup          " Write a backup while saving and remove it afterwards
 set backupcopy=yes
 "set backupext=~mda
 
+" Writes FILE.un~ files for saved undo history
+set undofile
 
 
 "
@@ -54,10 +58,6 @@ set report=1
 " show cursor pos all the time
 set ruler
 
-" Search
-set hlsearch            " Highlight search matches set hlsearch
-set incsearch           " and show part matches
-
 " What to display in the status line
 "
 " Colour. Can set the hl groups User1..User9 for use in this string. Only
@@ -66,12 +66,14 @@ set incsearch           " and show part matches
 " See mda_dark colour scheme for the User1 used here
 set statusline=<%n>\ %1*\ %-0.50f\ %*%r%m\ %y%<\ %=\ (%l/%L,%c%V)\ %P
 
-" Show partial command in status line
+" Show mode and partial command in status line
+set showmode
 set showcmd
-
 
 " Allow backspace over everyting in insert mode
 set backspace=indent,eol,start
+
+set colorcolumn=80
 
 " Use terminal mouse in normal mode
 set mouse=n
@@ -82,6 +84,9 @@ set history=100
 " Display status line always
 set laststatus=2   " 0=never 1=only with 2+ windows 2=always
 
+" Show hidden chars and make tab and eol look nice with some unicode
+set list
+set listchars+=tab:▸\ ,eol:¬,trail:☠
 " Chars to display at end of lines when nowrap.
 set listchars+=precedes:<,extends:>
 
@@ -89,7 +94,29 @@ set listchars+=precedes:<,extends:>
 set sidescroll=4
 
 " How near the bottom before scroll
-set so=4
+set scrolloff=4
+
+set ttyfast
+"set relativenumber
+
+
+
+" Search
+"=============================================================================
+set hlsearch            " Highlight search matches set hlsearch
+set incsearch           " and show part matches
+
+" Insert \v before search strings so we get more perl like regexp
+nnoremap / /\v
+vnoremap / /\v
+
+" If you search for an all-lowercase string your search will be
+" case-insensitive, but if one or more characters is uppercase the search will
+" be case-sensitive.
+set ignorecase
+set smartcase
+
+set gdefault
 
 
 " Completion
@@ -132,6 +159,7 @@ set autoindent          " Indent of next line follwos previous line.
 set expandtab
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4
 set textwidth=79
 
 " Format opts on
@@ -143,7 +171,7 @@ set textwidth=79
 " -n Sort indent on numbered lists
 " -a Auto format paras as they change
 "  TODO: Use long form of set for these
-set formatoptions=tcqlrn
+set formatoptions=tcqlrn1
 
 
 "
@@ -213,6 +241,9 @@ colorscheme mda_dark
 " let myscriptsfile = "~/.vim/scripts.vim"
 filetype plugin on
 filetype indent on
+
+" Write changes on loss of focus
+"au FocusLost * :wa
 
 " xacro are xml macro files used by ROS
 au BufNewFile,BufRead *.xacro set filetype=xml
@@ -342,4 +373,16 @@ map! <xF4> <F4>
 map! <xF3> <F3>
 map! <xF2> <F2>
 map! <xF1> <F1>
+
+" Clear the current search
+nnoremap <leader><space> :noh<cr>
+
+nnoremap <tab> %
+vnoremap <tab> %
+
+" Make wrapped lines easier, move cursor by screen lines not file lines.
+nnoremap j gj
+nnoremap k gk
+nnoremap <up> g<up>
+nnoremap <down> g<down>
 

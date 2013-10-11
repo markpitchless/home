@@ -59,6 +59,8 @@ hi Folded     guibg=#1A1824   guifg=#AAAAAA   gui=NONE ctermfg=DarkMagenta cterm
 hi FoldColumn guibg=#1A1824   guifg=#CCCCCC   gui=NONE ctermfg=DarkMagenta ctermbg=DarkGrey
 "hi WildMenu
 
+hi ColorColumn term=reverse ctermbg=0 ctermfg=DarkGrey guibg=#1A1824
+
 " Messages
 "
 hi ErrorMsg	guifg=Red	guibg=Black	gui=bold
@@ -68,10 +70,11 @@ hi ErrorMsg	guifg=Red	guibg=Black	gui=bold
 "hi Question
 "hi WarningMsg
 
-"hi NonText
-	" ~ and @ at the end of window etc
+" ~ and @ at the end of window, newlines from set list, etc
+hi NonText guifg=#292939 ctermfg=DarkGrey
+" Meta and special keys listed with :map. Also unprintable chars like tabs
 "hi SpecialKey
-	" Meta and special keys listed with :map. Also unprintable chars
+hi SpecialKey guifg=#292939 ctermfg=DarkGrey
 
 " Visual mode and search
 "
