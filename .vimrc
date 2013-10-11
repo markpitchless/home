@@ -391,3 +391,13 @@ nnoremap k gk
 nnoremap <up> g<up>
 nnoremap <down> g<down>
 
+" Map faster keys for window movement
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+nmap <C-left> <C-w>h
+nmap <C-down> <C-w>j
+nmap <C-up> <C-w>k
+nmap <C-right> <C-w>l
+
