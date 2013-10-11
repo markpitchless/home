@@ -1,3 +1,8 @@
+" Mark Pitchless vim config.
+
+" 2013-10-11. Lots of tweaks from here:
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+
 " make vim useful!
 set nocompatible
 
