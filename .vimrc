@@ -401,3 +401,8 @@ nmap <C-down> <C-w>j
 nmap <C-up> <C-w>k
 nmap <C-right> <C-w>l
 
+
+" NERDTree bundle
+" Auto open tree if no files. Close if only tree left.
+autocmd vimenter * if !argc() | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
