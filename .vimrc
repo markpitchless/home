@@ -406,6 +406,7 @@ nmap <C-right> <C-w>l
 " Auto open tree if no files. Close if only tree left.
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nmap <F9> :NERDTreeToggle<cr>
 
 " NERDCommenter
 nmap <leader># <leader>c<space>
