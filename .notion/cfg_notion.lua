@@ -231,11 +231,25 @@ defbindings("WScreen", {
     kpress(META.."grave", "mod_sp.set_shown_on(_, 'toggle')"),
 })
 
+
+
+
 --
 -- WinProps - Map apps to specific frames etc
 --
 -- http://sourceforge.net/apps/mediawiki/notion/index.php?title=Tour#Specifying_that_a_certain_program_should_always_be_in_a_certain_frame
 -- http://notion.sourceforge.net/notionconf/node4.html#SECTION00450000000000000000
+
+-- Make noify messages less annoying
+defwinprop {
+    class    = "Xfce4-notifyd",
+    instance = "xfce4-notifyd",
+    float = true,
+    transparent = true,
+    jumpto = false,
+    --switchto = false,
+    --ignore_net_active_window = true,
+}
 
 --defwinprop {
 --    class    = "Zim",
@@ -249,6 +263,9 @@ defbindings("WScreen", {
 --    name    = "kinectGui",
 --    target  = "OfApp",
 --}
+
+
+
 
 --
 -- Layouts

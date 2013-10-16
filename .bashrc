@@ -58,9 +58,9 @@ if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     # Uses a shortened PWD
     if [ "$TERM" == "screen" ]; then
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\]$ '
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
     else
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\]$ '
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -114,7 +114,7 @@ fi
 
 # Run any other rc we might have
 if [ -d ~/.bashrc.d ]; then
-  for i in ~/.bashrc.d/*.sh; do
+  for i in ~/.bashrc.d/*.{sh,bash}; do
     if [ -r $i ]; then
       . $i
     fi

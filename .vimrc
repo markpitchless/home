@@ -1,21 +1,10 @@
-version 6.0
+" Mark Pitchless vim config.
+
+" 2013-10-11. Lots of tweaks from here:
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+
 " make vim useful!
 set nocompatible
-
-"
-" map x keys
-"=============================================================================
-
-map! <xHome> <Home>
-map! <xEnd> <End>
-map! <S-xF4> <S-F4>
-map! <S-xF3> <S-F3>
-map! <S-xF2> <S-F2>
-map! <S-xF1> <S-F1>
-map! <xF4> <F4>
-map! <xF3> <F3>
-map! <xF2> <F2>
-map! <xF1> <F1>
 
 " Set up xterm for 8 colours. See *xterm-color* in help.
 "
@@ -43,6 +32,8 @@ map! <xF1> <F1>
 "endif
 
 
+"set encoding=utf-8
+
 
 "
 " Read writing backup etc
@@ -57,6 +48,8 @@ set writebackup          " Write a backup while saving and remove it afterwards
 set backupcopy=yes
 "set backupext=~mda
 
+" Writes FILE.un~ files for saved undo history
+set undofile
 
 
 "
@@ -70,10 +63,6 @@ set report=1
 " show cursor pos all the time
 set ruler
 
-" Search
-set hlsearch            " Highlight search matches set hlsearch
-set incsearch           " and show part matches
-
 " What to display in the status line
 "
 " Colour. Can set the hl groups User1..User9 for use in this string. Only
@@ -82,12 +71,14 @@ set incsearch           " and show part matches
 " See mda_dark colour scheme for the User1 used here
 set statusline=<%n>\ %1*\ %-0.50f\ %*%r%m\ %y%<\ %=\ (%l/%L,%c%V)\ %P
 
-" Show partial command in status line
+" Show mode and partial command in status line
+set showmode
 set showcmd
-
 
 " Allow backspace over everyting in insert mode
 set backspace=indent,eol,start
+
+set colorcolumn=80
 
 " Use terminal mouse in normal mode
 set mouse=n
@@ -98,6 +89,9 @@ set history=100
 " Display status line always
 set laststatus=2   " 0=never 1=only with 2+ windows 2=always
 
+" Show hidden chars and make tab and eol look nice with some unicode
+set list
+set listchars+=tab:▸\ ,eol:¬,trail:☠
 " Chars to display at end of lines when nowrap.
 set listchars+=precedes:<,extends:>
 
@@ -105,7 +99,29 @@ set listchars+=precedes:<,extends:>
 set sidescroll=4
 
 " How near the bottom before scroll
-set so=4
+set scrolloff=4
+
+set ttyfast
+"set relativenumber
+
+
+
+" Search
+"=============================================================================
+set hlsearch            " Highlight search matches set hlsearch
+set incsearch           " and show part matches
+
+" Insert \v before search strings so we get more perl like regexp
+nnoremap / /\v
+vnoremap / /\v
+
+" If you search for an all-lowercase string your search will be
+" case-insensitive, but if one or more characters is uppercase the search will
+" be case-sensitive.
+set ignorecase
+set smartcase
+
+set gdefault
 
 
 " Completion
@@ -142,12 +158,13 @@ set bufhidden=hide
 
 "
 " Formatting
-"============================================================================= 
+"=============================================================================
 
 set autoindent          " Indent of next line follwos previous line.
 set expandtab
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4
 set textwidth=79
 
 " Format opts on
@@ -159,40 +176,22 @@ set textwidth=79
 " -n Sort indent on numbered lists
 " -a Auto format paras as they change
 "  TODO: Use long form of set for these
-set formatoptions=tcqlrn
-
+set formatoptions=tcqlrn1
 
 
 "
-" Colours
+" Folding
 "=============================================================================
 
-" Note: Syntax on also does :filetype on
-syntax on
-colorscheme mda_dark
+set foldcolumn=6
+set foldmethod=indent
 
-" Highlight the current line (cursorline)
-" http://vim.wikia.com/wiki/Highlight_current_line
-set cursorline
-"set columnline
-"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+" Min lines for current window. Not a hard limit!
+set winheight=6
 
-"To highlight the current line, and have the highlighting stay where it is when
-"the cursor is moved, use this mapping:
-"
-":nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
-"
-"With the default backslash leader key, pressing \l will highlight the line
-"that currently contains the cursor. The mapping also sets mark l so you can
-"type 'l to return to the highlighted line. Enter :match to clear the
-"highlighting when finished.
-"
-"To highlight the current virtual column (column after tabs are expanded), and
-"have the highlighting stay where it is when the cursor is moved, use this
-"mapping:
-"
-":nnoremap <silent> <Leader>c :execute 'match Search /\%'.virtcol('.').'v/'<CR>
+" Allow windows to squash down to just a status bar
+set winminheight=0
+
 
 
 "
@@ -220,7 +219,23 @@ set guifont=Droid\ Sans\ Mono\ 9
 " No toolbar
 set guioptions-=T
 
+"
+" Pathogen bundle (plugin) manager.
+" See: https://github.com/tpope/vim-pathogen
+" See: http://tammersaleh.com/posts/the-modern-vim-config-with-pathogen/
+" Plugins go in .vim/bundle
+"=============================================================================
+execute pathogen#infect()
+execute pathogen#helptags()
 
+
+"
+" Colours
+"=============================================================================
+
+" Note: Syntax on also does :filetype on
+syntax on
+colorscheme mda_dark
 
 "
 " FileType plugin.
@@ -232,6 +247,9 @@ set guioptions-=T
 filetype plugin on
 filetype indent on
 
+" Write changes on loss of focus
+"au FocusLost * :wa
+
 " xacro are xml macro files used by ROS
 au BufNewFile,BufRead *.xacro set filetype=xml
 " urdf are xml files from ROS - universal robot description format
@@ -241,17 +259,29 @@ au BufNewFile,BufRead *.launch set filetype=xml
 
 
 "
-" Folding
+" Highlight the current line (cursorline)
+" http://vim.wikia.com/wiki/Highlight_current_line
 "=============================================================================
+set cursorline
+"set columnline
+"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
-set foldcolumn=6
-set foldmethod=indent
-
-" Min lines for current window. Not a hard limit!
-set winheight=6
-
-" Allow windows to squash down to just a status bar
-set winminheight=0
+"To highlight the current line, and have the highlighting stay where it is when
+"the cursor is moved, use this mapping:
+"
+":nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+"
+"With the default backslash leader key, pressing \l will highlight the line
+"that currently contains the cursor. The mapping also sets mark l so you can
+"type 'l to return to the highlighted line. Enter :match to clear the
+"highlighting when finished.
+"
+"To highlight the current virtual column (column after tabs are expanded), and
+"have the highlighting stay where it is when the cursor is moved, use this
+"mapping:
+"
+":nnoremap <silent> <Leader>c :execute 'match Search /\%'.virtcol('.').'v/'<CR>
 
 
 "
@@ -336,3 +366,48 @@ let b:match_words = &matchpairs
 " Tab switching
 map <C-PageUp> :tabprev<Return>
 map <C-PageDown> :tabnext<Return>
+
+" x keys
+map! <xHome> <Home>
+map! <xEnd> <End>
+map! <S-xF4> <S-F4>
+map! <S-xF3> <S-F3>
+map! <S-xF2> <S-F2>
+map! <S-xF1> <S-F1>
+map! <xF4> <F4>
+map! <xF3> <F3>
+map! <xF2> <F2>
+map! <xF1> <F1>
+
+" Clear the current search
+nnoremap <leader><space> :noh<cr>
+
+nnoremap <tab> %
+vnoremap <tab> %
+
+" Make wrapped lines easier, move cursor by screen lines not file lines.
+nnoremap j gj
+nnoremap k gk
+nnoremap <up> g<up>
+nnoremap <down> g<down>
+
+" Map faster keys for window movement
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+nmap <C-left> <C-w>h
+nmap <C-down> <C-w>j
+nmap <C-up> <C-w>k
+nmap <C-right> <C-w>l
+
+
+" NERDTree bundle
+" Auto open tree if no files. Close if only tree left.
+autocmd vimenter * if !argc() | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nmap <F9> :NERDTreeToggle<cr>
+
+" NERDCommenter
+nmap <leader># <leader>c<space>
+vmap <leader># <leader>c<space>
