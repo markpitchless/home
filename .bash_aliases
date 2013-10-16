@@ -12,3 +12,7 @@ alias bye='exit'
 alias ack='ack-grep'
 alias j='jobs'
 alias g='grep'
+
+# ROS
+alias lstopic="rostopic list"
+alias lsnode="rosnode list"
