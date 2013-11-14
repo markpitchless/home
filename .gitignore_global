@@ -78,3 +78,7 @@ tramp
 .project
 .metadata
 .cproject
+
+# Desktop #
+###########
+.directory
