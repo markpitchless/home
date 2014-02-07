@@ -18,3 +18,22 @@ fi
 if [ -d build ] && [ -d devel ] && [ -f devel/setup.bash ]; then
     source devel/setup.bash
 fi
+
+# catkin_make that works from anywhere in the fs when in a ros environment.
+function catkin_mk {
+    (
+        roscd
+        cd ..
+        echo Workspace: $(pwd)
+        catkin_make "$@"
+    )
+}
+
+alias lstopic="rostopic list"
+alias lsnode="rosnode list"
+alias lsparam="rosparam list"
+alias lsmsg="rosmsg list"
+alias lssrv="rossrv list"
+alias lsservice="rosservice list"
+alias techo="rostopic echo"
+alias rviz="rosrun rviz rviz"

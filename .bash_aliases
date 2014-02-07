@@ -15,6 +15,3 @@ fi
 alias j='jobs'
 alias g='grep'
 
-# ROS
-alias lstopic="rostopic list"
-alias lsnode="rosnode list"
