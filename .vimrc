@@ -411,3 +411,7 @@ nmap <F9> :NERDTreeToggle<cr>
 " NERDCommenter
 nmap <leader># <leader>c<space>
 vmap <leader># <leader>c<space>
+
+" Gundo
+" http://sjl.bitbucket.org/gundo.vim/
+nnoremap <F5> :GundoToggle<CR>
