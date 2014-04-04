@@ -22,7 +22,7 @@ fi
 # catkin_make that works from anywhere in the fs when in a ros environment.
 function catkin_mk {
     (
-        roscd
+        roscd || return
         cd ..
         echo Workspace: $(pwd)
         catkin_make "$@"
