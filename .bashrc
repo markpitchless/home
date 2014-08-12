@@ -60,7 +60,9 @@ if [ "$color_prompt" = yes ]; then
     if [ "$TERM" == "screen" ]; then
         PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
     else
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
+        #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
+        # Command on own line, long paths with ROS!
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(vcs_get_branch)[$(echo "$ROS_DISTRO")]\n\[\033[01;32m\]> \[\033[00m\]'
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -132,3 +134,4 @@ if [ -d "$hostrc_dir" ]; then
   done
   unset i
 fi
+
