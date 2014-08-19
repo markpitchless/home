@@ -15,8 +15,10 @@ fi
 # If we start in a catkin workspace source the devel space
 # Works well if you have a term open on the workspace and start a new terminal
 # from there (Ctl-Shift-N).
-if [ -d build ] && [ -d devel ] && [ -f devel/setup.bash ]; then
-    source devel/setup.bash
+if [ -z "${ROS_MASTER_URI}" ]; then
+    if [ -d build ] && [ -d devel ] && [ -f devel/setup.bash ]; then
+        source devel/setup.bash
+    fi
 fi
 
 # catkin_make that works from anywhere in the fs when in a ros environment.
