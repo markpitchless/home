@@ -63,7 +63,7 @@ if [ "$color_prompt" = yes ]; then
         #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
         # Command on own line, long paths with ROS!
         #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(vcs_get_branch)[$(echo "$ROS_DISTRO")]\n\[\033[01;32m\]> \[\033[00m\]'
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)[$(echo "$ROS_DISTRO")]\n\[\033[01;32m\]> \[\033[00m\]'
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD -c -m40)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)[$(echo "$ROS_DISTRO")]\n\[\033[01;32m\]> \[\033[00m\]'
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
