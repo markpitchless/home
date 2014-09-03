@@ -3,9 +3,47 @@
 # http://tldp.org/HOWTO/Bash-Prompt-HOWTO/x783.html
 
 pwd_length=30
+term_cols=0
+minus_chars=0
+
+# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+OPTIND=1 # Reset in case getopts has been used previously in the shell.
+while getopts "h?cm:" opt; do
+    case "$opt" in
+    h|\?)
+        #show_help
+        echo "Usage: shortPWD [LENGTH]"
+        echo Shortens the pwd to LENGTH chars.
+        echo
+        echo   "LENGTH Length to shorten to. Default: $pwd_length"
+        echo   "-c     Use term width/columns instead of LENGTH"
+        exit 0
+        ;;
+    c)  term_cols=1
+        ;;
+    m)  minus_chars=$OPTARG
+        ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ "$#" == 1 ]; then
+    pwd_length=$1
+fi
+# Use terminal width (cols) to get shorten length
+if [ "$term_cols" == 1 ]; then
+    pwd_length=`tput cols`
+fi
+# Remove chars
+(( pwd_length = pwd_length - minus_chars ))
+# Test for min length
+if (( pwd_length < 10 )); then
+    pwd_length=10
+fi
+
+
 
 DIR=`pwd`
-
 echo $DIR | grep "^$HOME" >> /dev/null
 
 if [ $? -eq 0 ]
