@@ -15,3 +15,8 @@ fi
 alias j='jobs'
 alias g='grep'
 
+# Git
+alias commit='git commit'
+alias pull='git pull'
+alias push='git push'
+alias vls='git status'
