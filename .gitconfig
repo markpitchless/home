@@ -23,3 +23,5 @@
 	undo-commit = reset --soft HEAD^
 	redo-commit = commit -a -c ORIG_HEAD
     logk = log --graph --decorate --pretty=oneline --abbrev-commit
+[credential]
+	helper = cache
