@@ -15,11 +15,11 @@ fi
 alias j='jobs'
 alias g='grep'
 
-# http://stackoverflow.com/questions/263890/how-do-i-find-the-width-height-of-a-terminal-window
-alias dim="echo $(tput cols)x$(tput lines)"
-
 # Git
 alias commit='git commit'
+alias checkout='git checkout'
 alias pull='git pull'
 alias push='git push'
-alias vls='git status'
+alias lsv='git status'
+
+alias ansible-vagrant='ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory -u vagrant --private-key ~/.vagrant.d/insecure_private_key'
