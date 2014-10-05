@@ -218,6 +218,8 @@ map <F4> :emenu <C-Z>
 set guifont=Droid\ Sans\ Mono\ 9
 " No toolbar
 set guioptions-=T
+" Left scroll bar confuses some window managers
+set guioptions-=L
 
 "
 " Pathogen bundle (plugin) manager.
