@@ -25,3 +25,5 @@
     logk = log --graph --decorate --pretty=oneline --abbrev-commit
 [credential]
 	helper = cache
+[push]
+	default = simple
