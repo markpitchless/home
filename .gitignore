@@ -26,4 +26,9 @@ VirtualBox VMs
 .viminfo
 .notion/default-session-*/
 .notion/startup.log
-
+ShadowRobot
+Selina
+sketchbook
+.thumbnails
+*id_rsa
+.xsession-errors*
