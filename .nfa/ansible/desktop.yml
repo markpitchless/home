@@ -1,0 +1,20 @@
+---
+# Ansible playbook to setup a desktop machine the way I like.
+- hosts: localhost
+  vars:
+    packages:
+      - vim
+      - tree
+      - htop
+      - terminator
+      - xtail
+      - ack-grep
+      - wajig
+      - ccze
+      - idle
+      - fonts-droid
+  tasks:
+    - name: Install packages
+      sudo: yes
+      apt: name={{item}}
+      with_items: packages
