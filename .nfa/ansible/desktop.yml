@@ -13,6 +13,9 @@
       - ccze
       - idle
       - fonts-droid
+      - kvpm
+      - quicksynergy
+      - synergy
   tasks:
     - name: Install packages
       sudo: yes
