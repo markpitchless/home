@@ -17,6 +17,7 @@
       - kvpm
       - quicksynergy
       - synergy
+      - synaptic
   tasks:
     - name: Install packages
       sudo: yes
