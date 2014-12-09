@@ -1,11 +1,14 @@
 [global_config]
   title_transmit_bg_color = "#8139ed"
   focus = mouse
+  title_inactive_bg_color = "#454953"
 [keybindings]
 [profiles]
   [[default]]
+    background_darkness = 0.91
     use_system_font = False
     font = Droid Sans Mono 10
+    background_type = transparent
     background_image = None
 [layouts]
   [[default]]
