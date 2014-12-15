@@ -18,8 +18,16 @@
       - quicksynergy
       - synergy
       - synaptic
+      - zim
+      - git
+      - bzr
   tasks:
     - name: Install packages
       sudo: yes
       apt: name={{item}}
       with_items: packages
+
+    - name: Setup bzr
+      command: bzr whoami "Mark Pitchless <markpitchless@gmail.com>"
+
+# TODO: Update /etc/hosts
