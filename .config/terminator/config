@@ -5,11 +5,13 @@
 [keybindings]
 [profiles]
   [[default]]
-    background_darkness = 0.91
     use_system_font = False
-    font = Droid Sans Mono 10
+    background_darkness = 0.91
+    scrollback_lines = 5682
     background_type = transparent
     background_image = None
+    scroll_on_output = False
+    font = Droid Sans Mono 10
 [layouts]
   [[default]]
     [[[child1]]]
