@@ -1,5 +1,6 @@
 *.swp
 bak
+.bashrc.local
 Desktop
 Documents
 Downloads

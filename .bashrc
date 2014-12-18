@@ -136,3 +136,8 @@ if [ -d "$hostrc_dir" ]; then
   unset i
 fi
 
+# Run local rc. File ignored by git.
+localrc_file="$HOME/.bashrc.local"
+if [ -r "$localrc_file" ]; then
+    . $localrc_file
+fi
