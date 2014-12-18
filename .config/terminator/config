@@ -11,7 +11,7 @@
     background_type = transparent
     background_image = None
     scroll_on_output = False
-    font = Droid Sans Mono 10
+    font = Droid Sans Mono 9
 [layouts]
   [[default]]
     [[[child1]]]
