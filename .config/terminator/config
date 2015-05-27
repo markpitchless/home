@@ -1,17 +1,19 @@
 [global_config]
   title_transmit_bg_color = "#8139ed"
   focus = mouse
-  title_inactive_bg_color = "#454953"
+  title_transmit_fg_color = "#d5da02"
+  title_inactive_bg_color = "#9a9597"
 [keybindings]
 [profiles]
   [[default]]
     use_system_font = False
-    background_darkness = 0.91
-    scrollback_lines = 5682
+    font = Droid Sans Mono 9
+    background_darkness = 0.84
+    scrollback_lines = 6104
     background_type = transparent
     background_image = None
     scroll_on_output = False
-    font = Droid Sans Mono 9
+    copy_on_selection = True
 [layouts]
   [[default]]
     [[[child1]]]
