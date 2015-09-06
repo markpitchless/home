@@ -20,6 +20,11 @@ set nocompatible
 "	endif
 "endif
 
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=16
+    set background=dark
+endif
+
 " 16 colour xterm setup
 "if has("terminfo")
 "  set t_Co=16
@@ -30,6 +35,7 @@ set nocompatible
 "  set t_Sf=<Esc>[3%dm
 "  set t_Sb=<Esc>[4%dm
 "endif
+"  set t_Co=16
 
 
 set encoding=utf-8
@@ -210,16 +216,19 @@ map <F4> :emenu <C-Z>
 " GUI
 "=============================================================================
 
-"set guifontset=-*-Monospace-medium-r-normal--10-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-m-*-*-*,*
-"set guifont=Monospace\ 9
-"This sets font to sans not Droid...
-"set guifont=Droid\ Sans\ Mono\ 9,Monospace\ 9
-"...but this works. wtf?
-set guifont=Droid\ Sans\ Mono\ 9
-" No toolbar
-set guioptions-=T
-" Left scroll bar confuses some window managers
-set guioptions-=L
+if has("gui_running")
+    "set guifontset=-*-Monospace-medium-r-normal--10-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-m-*-*-*,*
+    "set guifont=Monospace\ 9
+    "This sets font to sans not Droid...
+    "set guifont=Droid\ Sans\ Mono\ 9,Monospace\ 9
+    "...but this works. wtf?
+    "set guifont=Droid\ Sans\ Mono\ 9
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+    " No toolbar
+    set guioptions-=T
+    " Left scroll bar confuses some window managers
+    set guioptions-=L
+endif
 
 "
 " Pathogen bundle (plugin) manager.
@@ -237,7 +246,9 @@ execute pathogen#helptags()
 
 " Note: Syntax on also does :filetype on
 syntax on
-colorscheme mda_dark
+set background=dark
+"colorscheme mda_dark
+colorscheme solarized
 
 "
 " FileType plugin.
@@ -251,6 +262,18 @@ filetype indent on
 
 " Write changes on loss of focus
 "au FocusLost * :wa
+
+" Special JSON indent and folding.
+" http://vimawesome.com/plugin/json-vim
+augroup json_autocmd
+  autocmd!
+  autocmd FileType json set autoindent
+  autocmd FileType json set formatoptions=tcq2l
+  autocmd FileType json set textwidth=78 shiftwidth=4
+  autocmd FileType json set softtabstop=4 tabstop=4
+  autocmd FileType json set expandtab
+  autocmd FileType json set foldmethod=syntax
+augroup END
 
 " xacro are xml macro files used by ROS
 au BufNewFile,BufRead *.xacro set filetype=xml
@@ -285,6 +308,10 @@ set cursorline
 "
 ":nnoremap <silent> <Leader>c :execute 'match Search /\%'.virtcol('.').'v/'<CR>
 
+" vim-airline - https://github.com/bling/vim-airline
+"=============================================================================
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'luna'
 
 "
 " File browser plugin
@@ -405,15 +432,52 @@ nmap <C-right> <C-w>l
 
 
 " NERDTree bundle
+"-----------------------------------------------------------------------------
 " Auto open tree if no files. Close if only tree left.
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 nmap <F9> :NERDTreeToggle<cr>
 
 " NERDCommenter
+"-----------------------------------------------------------------------------
 nmap <leader># <leader>c<space>
 vmap <leader># <leader>c<space>
 
+" Tagbar
+"-----------------------------------------------------------------------------
+nmap <F8> :TagbarToggle<CR>
+
 " Gundo
+"-----------------------------------------------------------------------------
 " http://sjl.bitbucket.org/gundo.vim/
 nnoremap <F5> :GundoToggle<CR>
+
+" vim-go
+"----------------------------------------------------------------------------
+" https://github.com/fatih/vim-go
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+"By default the mapping gd is enabled which opens the target identifier in current buffer. You can also open the definition/declaration in a new vertical, horizontal or tab for the word under your cursor:
+"au FileType go nmap <Leader>ds <Plug>(go-def-split)
+"au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+"au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+" Open go doc for word under cursor.
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+" Show type info for the word under your cursor with <leader>i (useful if you have disabled auto showing type info via g:go_auto_type_info)
+au FileType go nmap <Leader>i <Plug>(go-info)
+" Rename the identifier under the cursor to a new name
+au FileType go nmap <Leader>e <Plug>(go-rename)
+" More <Plug> mappings can be seen with :he go-mappings. Also these are just recommendations, you are free to create more advanced mappings or functions based on :he go-commands
+
