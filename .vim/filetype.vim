@@ -4,7 +4,7 @@
 "
 " This file is sourced before the global FiltType commands have been installed
 " and the commands here will match first.
-" 
+"
 " NB: You must restart vim for changes to take effecs
 
 " Don't run this if we already have
@@ -17,6 +17,12 @@ endif
 "	au! BufRead,BufNewFile *.mime	setfiletype mime
 "	au! BufRead,BufNewFile *.xyz	setfiletype drawing
 "augroup END
+
+" JSON
+" http://vimawesome.com/plugin/json-vim
+augroup json
+    au! BufRead,BufNewFile *.json set filetype=json
+augroup END
 
 "
 " Fish
