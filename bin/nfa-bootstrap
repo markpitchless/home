@@ -1,12 +1,22 @@
 #!/bin/sh
 
+#
+# Boot strap nfa install by cloning git repo into home.
+# Back up the old (probably distro default) .bashrc and .bash_profile files as
+# we replace with git versions.
+#
+
 user="$USER"
 
 bakdate="$(date +%Y%m%dT%H%M%S)"
 
+sudo apt-get install git
+
 cp "/home/$user/.bashrc" "/home/$user/.bashrc.$bakdate"
 cp "/home/$user/.bash_profile" "/home/$user/.bash_profile.$bakdate"
 
-git clone git@github.com:markpitchless/home.git "/tmp/$user"
+git clone http://github.com/markpitchless/home.git "/tmp/$user"
 cp -a "/tmp/$user" /home
 rm -rf "/tmp/$user"
+
+echo Now run nfa-provision
