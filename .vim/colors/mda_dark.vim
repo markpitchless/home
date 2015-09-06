@@ -29,7 +29,7 @@ let g:colors_name="mda_dark"
 "hi Normal guifg=#ECECEC	guibg=#000020	ctermfg=White ctermbg=Black	term=NONE
 " Use gnome-terminal transparent color for ctermbg
 hi clear Normal
-hi Normal   guifg=#ECECEC   guibg=#000010	ctermbg=9   ctermfg=Grey term=NONE
+hi Normal   guifg=#ECECEC   guibg=#000010  ctermbg=NONE   ctermfg=Grey term=NONE
 
 " TODO: Add font settings
 
@@ -154,7 +154,7 @@ hi Special		guifg=#F900ED	ctermfg=Magenta
 	 "hi Debug
 hi Underlined	gui=underline	cterm=underline	term=underline
 hi Ignore		guifg=#ACACAC	ctermfg=Gray
-hi Error		guifg=#FF0000	guibg=bg	gui=underline	ctermfg=bg ctermbg=Red	term=reverse
+hi Error		guifg=#FF0000	guibg=bg	gui=underline	ctermbg=Red	term=reverse
 hi Todo			guifg=Magenta	guibg=bg	ctermfg=fg ctermbg=Magenta	term=reverse
 
 
