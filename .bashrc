@@ -116,8 +116,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Run any other rc we might have
-if [ -d ~/.bashrc.d ]; then
-  for i in ~/.bashrc.d/*.{sh,bash}; do
+if [ -d ~/.nfa/bashrc.d ]; then
+  for i in ~/.nfa/bashrc.d/*.{sh,bash}; do
     if [ -r $i ]; then
       . $i
     fi
