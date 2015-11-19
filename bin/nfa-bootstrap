@@ -10,7 +10,7 @@ user="$USER"
 
 bakdate="$(date +%Y%m%dT%H%M%S)"
 
-sudo apt-get install git
+sudo apt-get install git ansible
 
 cp "/home/$user/.bashrc" "/home/$user/.bashrc.$bakdate"
 cp "/home/$user/.bash_profile" "/home/$user/.bash_profile.$bakdate"
@@ -19,4 +19,6 @@ git clone http://github.com/markpitchless/home.git "/tmp/$user"
 cp -a "/tmp/$user" /home
 rm -rf "/tmp/$user"
 
-echo Now run nfa-provision
+source ~/.bashrc
+
+nfa-provision
