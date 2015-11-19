@@ -126,7 +126,7 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 # Run any host specific rc we might have
-hostrc_dir="$HOME/.homeless/hostrc.d/$(hostname)"
+hostrc_dir="$HOME/.nfa/hostrc.d/$(hostname)"
 if [ -d "$hostrc_dir" ]; then
   for i in "$hostrc_dir"/*.{sh,bash}; do
     if [ -r $i ]; then
