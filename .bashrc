@@ -5,6 +5,11 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# set PATH so it includes nfa
+if [ -d ~/.nfa/bin ] ; then
+    PATH=~/.nfa/bin:"${PATH}"
+fi
+
 # set PATH so it includes user's private bin if it exists
 if [ -d ~/bin ] ; then
     PATH=~/bin:"${PATH}"
