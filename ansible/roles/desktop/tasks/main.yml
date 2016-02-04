@@ -1,0 +1,17 @@
+- name: Update package lists
+  apt: update_cache=yes
+  sudo: yes
+
+- name: Install packages
+  sudo: yes
+  apt: name={{item}}
+  with_items: packages
+
+- name: Get Powerline fonts
+  git: repo=https://github.com/powerline/fonts.git dest=/tmp/powerline-fonts
+
+- name: Install Powerline fonts
+  command: ./install.sh
+  args:
+    chdir: /tmp/powerline-fonts
+    creates: "~/.fonts/Droid Sans Mono for Powerline.otf"

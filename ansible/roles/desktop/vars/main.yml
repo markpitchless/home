@@ -1,0 +1,21 @@
+---
+packages:
+    - vim
+    - vim-gtk
+    - tree
+    - htop
+    - terminator
+    - xtail
+    - ack-grep
+    - wajig
+    - ccze
+    - fish
+    - idle
+    - fonts-droid
+    - kvpm
+    - quicksynergy
+    - synergy
+    - synaptic
+    - zim
+    - git
+    - bzr
