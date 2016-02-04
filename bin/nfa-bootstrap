@@ -14,18 +14,20 @@ sudo apt-get install git ansible
 
 git clone http://github.com/markpitchless/home.git ~/.nfa
 
+cp "/home/$user/.profile" "/home/$user/.profile.$bakdate"
 cp "/home/$user/.bashrc" "/home/$user/.bashrc.$bakdate"
 cp "/home/$user/.bash_profile" "/home/$user/.bash_profile.$bakdate"
 cp "/home/$user/.bash_logout" "/home/$user/.bash_logout.$bakdate"
 ln -s .nfa/profile .profile
 ln -s .nfa/bashrc .bashrc
+ln -s .nfa/bash_profile .bash_profile
 ln -s .nfa/bash_logout .bash_logout
 
 cd .nfa
 for dot in dot.*; do
     linkname=$(echo "$dot" | sed -e 's/^dot//')
     echo Linking $dot
-    ln -s $dot "../$linkname"
+    ln -s "../$linkname" "$dot"
 done
 
 cd
