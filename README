@@ -6,11 +6,23 @@ Putting my home dir (profile) under git control.
 
 https://github.com/markpitchless/home
 
-== Setup ==
+== Bootstrap ==
 
-Want this to go into home, so need to be careful to copy the dot files
-properly. e.g. for user in /home/mda
+1st time install into a new home directory.
 
- git clone git@github.com:markpitchless/home.git /tmp/mda
- cp -a /tmp/mda /home
- rm -rf /tmp/mda
+```
+cd ~
+wget https://raw.githubusercontent.com/markpitchless/home/master/bin/nfa-bootstrap
+chmod a+x nfa-bootstrap
+./nfa-bootstrap
+```
+
+Manages home dir but doesn't have the git repo there (after extensive use having a ``~/.git`` is bad idea, not quite as bad as you might think, but don't do it ;-), instead that goes in ``~/.nfa``, with shell hooks and configs symlinked. Use the bootstrap script for that initial setup.
+
+== Updates ==
+
+``
+cd ~/.nfa
+git pull
+nfa-provision
+``
