@@ -3,3 +3,4 @@
 - hosts: localhost
   roles:
     - desktop
+    - vim

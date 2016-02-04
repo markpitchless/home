@@ -1,7 +1,5 @@
 ---
 packages:
-    - vim
-    - vim-gtk
     - tree
     - htop
     - terminator
