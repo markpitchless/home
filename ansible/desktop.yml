@@ -23,13 +23,17 @@
       - git
       - bzr
   tasks:
+    - name: Update package lists
+      apt: update_cache=yes
+      sudo: yes
+
     - name: Install packages
       sudo: yes
       apt: name={{item}}
       with_items: packages
 
-    - name: Setup bzr
-      command: bzr whoami "Mark Pitchless <markpitchless@gmail.com>"
+    #- name: Setup bzr
+    #  command: bzr whoami "Mark Pitchless <markpitchless@gmail.com>"
 
     - name: Get Powerline fonts
       git: repo=https://github.com/powerline/fonts.git dest=/tmp/powerline-fonts
