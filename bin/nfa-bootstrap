@@ -13,7 +13,11 @@ bakdate="$(date +%Y%m%dT%H%M%S)"
 sudo apt-get install git ansible
 
 git clone http://github.com/markpitchless/home.git ~/.nfa
-
+(
+    cd ~/.nfa
+    git submodule update --init
+)
+g
 mv "/home/$user/.profile" "/home/$user/.profile.$bakdate"
 mv "/home/$user/.bashrc" "/home/$user/.bashrc.$bakdate"
 mv "/home/$user/.bash_profile" "/home/$user/.bash_profile.$bakdate"
