@@ -481,3 +481,7 @@ au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <Leader>e <Plug>(go-rename)
 " More <Plug> mappings can be seen with :he go-mappings. Also these are just recommendations, you are free to create more advanced mappings or functions based on :he go-commands
 
+" plugin: Airline
+"----------------------------------------------------------------------------
+" https://github.com/vim-airline/vim-airline#themes
+autocmd VimEnter * AirlineTheme bubblegum

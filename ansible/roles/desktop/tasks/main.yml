@@ -3,6 +3,6 @@
   sudo: yes
 
 - name: Install packages
-  sudo: yes
   apt: name={{item}}
+  sudo: yes
   with_items: packages
