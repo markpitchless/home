@@ -1,5 +1,7 @@
+*~
 *.swp
 bak
+.directory
 .bashrc.local
 Desktop
 Documents
