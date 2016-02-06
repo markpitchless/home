@@ -1,0 +1,21 @@
+---
+# http://www.displaylink.com/downloads/ubuntu
+
+- name: Install DKMS
+  apt: name=dkms
+  sudo: yes
+
+- name: Grab installer
+  get_url: url=http://www.displaylink.com/downloads/file?id=123 dest=/tmp/DisplayLink.zip
+
+- file: path=/tmp/DisplayLink state=directory mode=0755
+
+- name: Unpack it
+  unarchive: src=/tmp/DisplayLink.zip dest=/tmp/DisplayLink copy=no
+
+- shell: chmod u+x /tmp/DisplayLink/*.run
+
+- name: Install DisplayLink
+  shell: /tmp/DisplayLink/*.run creates=/usr/lib/displaylink
+  sudo: yes
+

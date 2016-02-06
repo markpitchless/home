@@ -4,3 +4,8 @@
   roles:
     - desktop
     - vim
+
+# XPS laptop ubuntu
+- hosts: ziller
+  roles:
+    - display_link
