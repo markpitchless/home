@@ -1,0 +1,47 @@
+---
+- name: Install packages
+  apt: name={{item}}
+  sudo: yes
+  with_items:
+    - awscli
+
+- name: User ~/usr/ folder
+  file: path=~/usr state=directory
+
+- name: Get aws-2fa-access-keys
+  git:
+    repo: https://github.com/cdodd/aws-2fa-access-keys.git
+    dest: ~/usr/aws-2fa-access-keys
+  #creates: ~/usr/aws-2fa-access-keys
+
+- name: Install aws-2fa-access-keys
+  command: pip3 install -r requirements.txt
+  args:
+    chdir: "{{ansible_user_dir}}/usr/aws-2fa-access-keys/"
+  sudo: yes
+
+- file: dest=~/.aws state=directory
+
+- stat: path=~/.aws/config
+  register: aws_config_file
+
+- name: aws cli config region
+  when: aws_config_file.stat.exists == False
+  ini_file: dest=~/.aws/config section=my-keys option=region value=eu-west-1
+
+- name: aws cli config access key
+  when: aws_config_file.stat.exists == False
+  ini_file: dest=~/.aws/config
+            section=my-keys
+            option=aws_access_key_id
+            value=xxxxxxxxxxxxxxxxxxxx
+
+- name: aws cli config secret key
+  when: aws_config_file.stat.exists == False
+  ini_file: dest=~/.aws/config
+            section=my-keys
+            option=aws_secret_access_key
+            value=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# TODO: change aws_account_id in the aws-get-token script
+# TODO: add this to the PATH
