@@ -1,4 +1,9 @@
 ---
+#
+# Sets up tool for command line 2FA access to AWS
+# See: https://github.com/cdodd/aws-2fa-access-keys
+#
+
 - name: Install packages
   apt: name={{item}}
   sudo: yes
