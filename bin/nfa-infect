@@ -21,7 +21,7 @@ infect(){
     else
       echo Infecting: $f
     fi
-    dry mv "$f" "$f.$bakdate"
+    [ -e "$f" ] && dry mv "$f" "$f.$bakdate"
     dry ln -s .nfa/"$linkname" "$f"
 }
 
@@ -38,6 +38,7 @@ infect-file .bash_profile
 infect-file .bash_logout
 
 for dot in .nfa/dot.*; do
-    linkname=$(basename "$dot" | sed -e 's/^dot//')
-    infect "$linkname" "$dot"
+    name=$(basename "$dot" | sed -e 's/^dot//')
+    linkname=$(basename "$dot")
+    infect "$name" "$linkname"
 done
