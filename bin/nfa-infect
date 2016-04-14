@@ -2,15 +2,32 @@
 
 user="$USER"
 bakdate="$(date +%Y%m%dT%H%M%S)"
+dry=false
 
+dry(){
+    if [ "$dry" = true ]; then
+        echo DRY: "$@"
+    else
+        $@
+    fi
+}
+
+infect(){
+    f="$1"
+    linkname=$2
+    if [ -L "$f" ]; then
+      echo Infected: $f
+      return
+    else
+      echo Infecting: $f
+    fi
+    dry mv "$f" "$f.$bakdate"
+    dry ln -s .nfa/"$linkname" "$f"
+}
 
 infect-file(){
-    f="$1"
-    echo mv "$f" "$f.$bakdate"
-    linkname=$(basename "$f" | sed -e 's/^.//')
-    #ln -s .nfa/profile .profile
-    echo Infecting $f
-    echo ln -s .nfa/"$linkname" "$f"
+    linkname=$(basename "$1" | sed -e 's/^.//')
+    infect "$1" "$linkname"
 }
 
 cd
@@ -22,6 +39,5 @@ infect-file .bash_logout
 
 for dot in .nfa/dot.*; do
     linkname=$(basename "$dot" | sed -e 's/^dot//')
-    echo Linking $dot
-    ln -s "$dot" "$linkname"
+    infect "$linkname" "$dot"
 done
