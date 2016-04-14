@@ -10,4 +10,4 @@
   roles:
     - aws_developer
     #- display_link
-    - cocoon_developer
+    #- cocoon_developer

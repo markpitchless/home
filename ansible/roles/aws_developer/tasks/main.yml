@@ -22,7 +22,7 @@
 - name: Install aws-2fa-access-keys
   command: pip3 install -r requirements.txt
   args:
-    chdir: "{{ansible_user_dir}}/usr/aws-2fa-access-keys/"
+    chdir: /home/{{ansible_user_id}}/usr/aws-2fa-access-keys/
   sudo: yes
 
 - file: dest=~/.aws state=directory
