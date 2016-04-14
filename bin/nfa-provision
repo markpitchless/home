@@ -1,3 +1,3 @@
 #!/bin/sh
 cd ~/.nfa/ansible
-ansible-playbook -i inventory desktop.yml -K
+ansible-playbook -i inventory desktop.yml -K $@

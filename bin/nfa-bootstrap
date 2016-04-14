@@ -2,13 +2,9 @@
 
 #
 # Boot strap nfa install by cloning git repo into ~/.nfa
-# Back up the old (probably distro default) .bashrc and .bash_profile files.
-# Symlink in the nfa versions.
+# Back up the old (probably distro default) .bashrc, .bash_profile etc files and
+# symlink in the nfa versions.
 #
-
-user="$USER"
-
-bakdate="$(date +%Y%m%dT%H%M%S)"
 
 sudo apt-get install git ansible
 
@@ -17,21 +13,8 @@ git clone http://github.com/markpitchless/home.git ~/.nfa
     cd ~/.nfa
     git submodule update --init
 )
-g
-mv "/home/$user/.profile" "/home/$user/.profile.$bakdate"
-mv "/home/$user/.bashrc" "/home/$user/.bashrc.$bakdate"
-mv "/home/$user/.bash_profile" "/home/$user/.bash_profile.$bakdate"
-mv "/home/$user/.bash_logout" "/home/$user/.bash_logout.$bakdate"
-ln -s .nfa/profile .profile
-ln -s .nfa/bashrc .bashrc
-ln -s .nfa/bash_profile .bash_profile
-ln -s .nfa/bash_logout .bash_logout
 
-for dot in .nfa/dot.*; do
-    linkname=$(basename "$dot" | sed -e 's/^dot//')
-    echo Linking $dot
-    ln -s "$dot" "$linkname"
-done
+~/.nfa/bin/nfa-infect
 
 cd
 source ~/.bashrc

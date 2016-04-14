@@ -20,3 +20,4 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+export PG_OF_PATH=/home/mda/Lab/of_v0.9.0_linux64_release

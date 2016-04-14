@@ -9,4 +9,5 @@
 - hosts: ziller
   roles:
     - aws_developer
-    - display_link
+    #- display_link
+    - cocoon_developer

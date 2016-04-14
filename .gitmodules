@@ -43,3 +43,6 @@
 [submodule "dot.vim/bundle/ansible-vim"]
 	path = dot.vim/bundle/ansible-vim
 	url = https://github.com/pearofducks/ansible-vim
+[submodule "dot.vim/bundle/vim-go"]
+	path = dot.vim/bundle/vim-go
+	url = git@github.com:fatih/vim-go.git

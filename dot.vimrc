@@ -282,6 +282,13 @@ au BufNewFile,BufRead *.urdf set filetype=xml
 " ROS launch files
 au BufNewFile,BufRead *.launch set filetype=xml
 
+augroup silkconf
+    au! BufRead,BufNewFile silk.conf set filetype=dosini
+augroup END
+augroup admiralconf
+    au! BufRead,BufNewFile admiral.conf set filetype=dosini
+augroup END
+
 
 "
 " Highlight the current line (cursorline)
