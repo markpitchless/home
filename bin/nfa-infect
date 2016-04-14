@@ -1,0 +1,27 @@
+#!/bin/bash
+
+user="$USER"
+bakdate="$(date +%Y%m%dT%H%M%S)"
+
+
+infect-file(){
+    f="$1"
+    echo mv "$f" "$f.$bakdate"
+    linkname=$(basename "$f" | sed -e 's/^.//')
+    #ln -s .nfa/profile .profile
+    echo Infecting $f
+    echo ln -s .nfa/"$linkname" "$f"
+}
+
+cd
+
+infect-file .profile
+infect-file .bashrc
+infect-file .bash_profile
+infect-file .bash_logout
+
+for dot in .nfa/dot.*; do
+    linkname=$(basename "$dot" | sed -e 's/^dot//')
+    echo Linking $dot
+    ln -s "$dot" "$linkname"
+done
