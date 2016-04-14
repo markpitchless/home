@@ -30,6 +30,10 @@ infect-file(){
     infect "$1" "$linkname"
 }
 
+# TODO: infect-dir() Infects with  symlink but after the move moves all the 
+# existing contents of the dir back in. So we dont loose all the .config by 
+# symlinking it.
+
 cd
 
 infect-file .profile
