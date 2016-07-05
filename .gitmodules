@@ -46,3 +46,9 @@
 [submodule "dot.vim/bundle/vim-go"]
 	path = dot.vim/bundle/vim-go
 	url = git@github.com:fatih/vim-go.git
+[submodule "dot.vim/bundle/yajs.vim"]
+	path = dot.vim/bundle/yajs.vim
+	url = https://github.com/othree/yajs.vim.git
+[submodule "dot.vim/bundle/javascript-libraries-syntax.vim"]
+	path = dot.vim/bundle/javascript-libraries-syntax.vim
+	url = https://github.com/othree/javascript-libraries-syntax.vim.git
