@@ -492,3 +492,10 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 "----------------------------------------------------------------------------
 " https://github.com/vim-airline/vim-airline#themes
 autocmd VimEnter * AirlineTheme bubblegum
+
+
+" plugin: jajs % javascript-libraries-syntax - javascript hightlighting
+" https://github.com/othree/yajs.vim
+" https://github.com/othree/javascript-libraries-syntax.vim
+"----------------------------------------------------------------------------
+let g:used_javascript_libs = 'jquery,underscore,chai,handlebars'
