@@ -66,9 +66,10 @@ if [ "$color_prompt" = yes ]; then
         PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
     else
         #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD)\[\033[00m\] $(vcs_get_branch)$ '
-        # Command on own line, long paths with ROS!
-        #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(vcs_get_branch)[$(echo "$ROS_DISTRO")]\n\[\033[01;32m\]> \[\033[00m\]'
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)[$(echo "$ROS_DISTRO")]\n\[\033[01;32m\]> \[\033[00m\]'
+        # Command on own line
+        #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
+        # command on own line and short pwd
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -116,8 +117,13 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+if ! shopt -oq posix; then
+    if [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    elif which -s brew && [ -f $(brew --prefix)/etc/bash_completion ]; then
+        # MacOS
+        . "$(brew --prefix)/etc/bash_completion"
+    fi
 fi
 
 # Run any other rc we might have

@@ -12,7 +12,14 @@ function vcs_get_branch {
     for vcs in git hg svn bzr; do
       if [[ -d "$dir/.$vcs" ]] && hash "$vcs" &>/dev/null; then
         case "$vcs" in
-          git) __git_ps1 "${1:-(%s) }"; return;;
+          git)
+              if type __git_ps1 1>/dev/null 2>&1; then
+                __git_ps1 "${1:-(%s) }"
+                return
+              else
+                nick=$(git branch 2>/dev/null | sed -e 's/^\* //')
+              fi
+              ;;
           hg) nick=$(hg branch 2>/dev/null);;
           svn) nick=$(svn info 2>/dev/null\
                 | grep -e '^Repository Root:'\
