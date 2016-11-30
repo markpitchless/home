@@ -1,7 +1,6 @@
 
-function ack -d "ack-grep - grep like text finder"
-    ack-grep $argv
-end
+source /usr/local/share/chruby/chruby.fish
+source /usr/local/share/chruby/auto.fish
 
 function j -d "Jobs"
     jobs $argv
@@ -23,3 +22,4 @@ function commit;   vcs commit $argv; end
 function pull;     vcs pull $argv; end
 function push;     vcs push $argv; end
 function branch;   vcs branch $argv; end
+
