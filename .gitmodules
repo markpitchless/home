@@ -55,3 +55,6 @@
 [submodule "dot.vim/bundle/syntastic"]
 	path = dot.vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "dot.vim/bundle/vim-nagios"]
+	path = dot.vim/bundle/vim-nagios
+	url = git@github.com:bigbrozer/vim-nagios.git
