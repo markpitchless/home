@@ -58,3 +58,6 @@
 [submodule "dot.vim/bundle/vim-nagios"]
 	path = dot.vim/bundle/vim-nagios
 	url = git@github.com:bigbrozer/vim-nagios.git
+[submodule "dot.vim/bundle/vim-puppet"]
+	path = dot.vim/bundle/vim-puppet
+	url = git://github.com/rodjek/vim-puppet.git
