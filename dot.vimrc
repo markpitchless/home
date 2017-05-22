@@ -217,13 +217,18 @@ map <F4> :emenu <C-Z>
 "=============================================================================
 
 if has("gui_running")
+    " Linux
     "set guifontset=-*-Monospace-medium-r-normal--10-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-c-*-*-*,-*-*-medium-r-normal--14-*-*-*-m-*-*-*,*
     "set guifont=Monospace\ 9
     "This sets font to sans not Droid...
     "set guifont=Droid\ Sans\ Mono\ 9,Monospace\ 9
     "...but this works. wtf?
     "set guifont=Droid\ Sans\ Mono\ 9
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+    "set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 9
+
+    " MacOS style
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
+
     " No toolbar
     set guioptions-=T
     " Left scroll bar confuses some window managers
@@ -247,8 +252,11 @@ execute pathogen#helptags()
 " Note: Syntax on also does :filetype on
 syntax on
 set background=dark
-"colorscheme mda_dark
-colorscheme solarized
+if has("gui_running")
+    colorscheme solarized
+else
+    colorscheme mda_dark
+endif
 
 "
 " FileType plugin.
@@ -428,14 +436,45 @@ nnoremap <up> g<up>
 nnoremap <down> g<down>
 
 " Map faster keys for window movement
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-nmap <C-left> <C-w>h
-nmap <C-down> <C-w>j
-nmap <C-up> <C-w>k
-nmap <C-right> <C-w>l
+"nmap <C-h> <C-w>h
+"nmap <C-j> <C-w>j
+"nmap <C-k> <C-w>k
+"nmap <C-l> <C-w>l
+"nmap <C-left> <C-w>h
+"nmap <C-down> <C-w>j
+"nmap <C-up> <C-w>k
+"nmap <C-right> <C-w>l
+nmap <A-h> <C-w><Left>
+nmap <A-j> <C-w><Down>
+nmap <A-k> <C-w><Up>
+nmap <A-l> <C-w><Right>
+nmap <A-left> <C-w><Left>
+nmap <A-down> <C-w><Down>
+nmap <A-up> <C-w><Up>
+nmap <A-right> <C-w><Right>
+nmap <D-left> <C-w><Left>
+nmap <D-down> <C-w><Down>
+nmap <D-up> <C-w><Up>
+nmap <D-right> <C-w><Right>
+"nnoremap <D-left> <C-w><Left>
+"nnoremap <D-down> <C-w><Down>
+"nnoremap <D-up> <C-w><Up>
+"nnoremap <D-right> <C-w><Right>
+
+function MapArrows ()
+    nmap <D-left> <C-w><Left>
+    nmap <D-down> <C-w><Down>
+    nmap <D-up> <C-w><Up>
+    nmap <D-right> <C-w><Right>
+endfunction
+command MapArrows call MapArrows()
+
+" Needed on mac to map alt key
+" http://stackoverflow.com/questions/7501092/can-i-map-alt-key-in-vim
+"nmap ˙ <C-w><Left>
+"nmap ¬ <C-w><Right>
+"nmap ˚ <C-w><Up>
+"nmap ∆ <C-w><Down>
 
 
 " NERDTree bundle
@@ -499,3 +538,21 @@ autocmd VimEnter * AirlineTheme bubblegum
 " https://github.com/othree/javascript-libraries-syntax.vim
 "----------------------------------------------------------------------------
 let g:used_javascript_libs = 'jquery,underscore,chai,handlebars'
+
+
+" plugin: Syntastic
+"-----------------------------------------------------------------------------
+" https://github.com/vim-syntastic/syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height = 1
+
+let g:syntastic_puppet_puppetlint_args = '--no-80chars-check --no-double_quoted_strings-check'
+"let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+
