@@ -124,7 +124,7 @@ fi
 if ! shopt -oq posix; then
     if [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
-    elif which -s brew && [ -f $(brew --prefix)/etc/bash_completion ]; then
+    elif which brew 1>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
         # MacOS
         . "$(brew --prefix)/etc/bash_completion"
     fi
