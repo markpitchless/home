@@ -8,21 +8,22 @@
 
 set -euo pipefail
 
+: ${NFA:=~/.nfa}
+: ${NFA_SOURCE_REPO:=http://github.com/markpitchless/home.git}
+
 if ! which git 1>/dev/null; then
     sudo apt-get install git
 fi
 
-cd # nfa installs into your home
-
-if [ -d ~/.nfa ]; then
+if [ -d "$NFA" ]; then
     echo NFA already boot strapped
     exit 0
 fi
 
-git clone http://github.com/markpitchless/home.git ~/.nfa
 (
-    cd ~/.nfa
+    git clone "$NFA_SOURCE_REPO" "$NFA"
+    cd "$NFA"
     git submodule update --init
 )
 
-exec ~/.nfa/bin/nfa-infect
+exec "$NFA/bin/nfa-infect"
