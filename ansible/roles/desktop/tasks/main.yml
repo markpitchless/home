@@ -1,8 +1,10 @@
 - name: Update package lists
   apt: update_cache=yes cache_valid_time=86400
-  sudo: yes
+  become: yes
 
-- name: Install packages
-  apt: name={{item}}
-  sudo: yes
-  with_items: packages
+- debug: msg=Hello
+
+- apt:
+    name: "{{ item }}"
+  become: yes
+  with_items: "{{ packages }}"

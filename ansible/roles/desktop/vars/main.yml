@@ -4,17 +4,20 @@ packages:
     - htop
     - terminator
     - xtail
-    - ack-grep
+    # name on older ubuntu and debian. Before 17.10
+    #- ack-grep
+    # Missing on 17.10
+    # https://bugs.launchpad.net/ubuntu/+source/ack/+bug/1707979
+    # Installed: https://launchpad.net/ubuntu/+archive/primary/+files/ack_2.18-2_all.deb
+    - ack
     - wajig
     - ccze
     - fish
-    - idle
-    - fonts-droid
-    - kvpm
-    - quicksynergy
-    - synergy
+    #- fonts-droid
+    #- kvpm
+    #- quicksynergy
+    #- synergy
     - synaptic
     - zim
     - git
-    - bzr
     - gimp
