@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -euo pipefail
+
+: ${NFA:=~/.nfa}
+
 user="$USER"
 bakdate="$(date +%Y%m%dT%H%M%S)"
 dry=false
@@ -21,28 +25,53 @@ infect(){
     else
       echo Infecting: $f
     fi
-    [ -e "$f" ] && dry mv "$f" "$f.$bakdate"
+    [ -e "$f" ] && dry mv "$f" "$f.nfa$bakdate"
     dry ln -s .nfa/"$linkname" "$f"
 }
 
-infect-file(){
+link-file(){
     linkname=$(basename "$1" | sed -e 's/^.//')
     infect "$1" "$linkname"
+}
+
+nfa-info() {
+    echo nfa: "$*"
+}
+
+nfa-bak-file(){
+    f=$1
+    [ -e "$f" ] && dry cp "$f" "$f.nfa$bakdate"
+}
+
+nfa-append-once(){
+    line="$1"
+    target="$2"
+
+    if [ ! -f "$target" ]; then
+        nfa-info Nothing to infect, "$target" not found
+    elif grep -q '^#nfa: infected' "$target"; then
+        nfa-info Already infected "$target"
+    else
+        nfa-bak-file "$target"
+        echo "#nfa: infected" >> "$target"
+        echo "$line" >> "$target"
+        nfa-info Infected "$target"
+    fi
 }
 
 # TODO: infect-dir() Infects with  symlink but after the move moves all the 
 # existing contents of the dir back in. So we dont loose all the .config by 
 # symlinking it.
 
-cd
+nfa-append-once "source $NFA/profile" "$HOME/.profile"
+nfa-append-once "source $NFA/bashrc" "$HOME/.bashrc"
+nfa-append-once "source $NFA/bash_profile" "$HOME/.bash_profile"
+nfa-append-once "source $NFA/bash_logout" "$HOME/.bash_logout"
 
-infect-file .profile
-infect-file .bashrc
-infect-file .bash_profile
-infect-file .bash_logout
-
-for dot in .nfa/dot.*; do
-    name=$(basename "$dot" | sed -e 's/^dot//')
-    linkname=$(basename "$dot")
-    infect "$name" "$linkname"
-done
+#link-file .bash_profile
+#
+#for dot in .nfa/dot.*; do
+#    name=$(basename "$dot" | sed -e 's/^dot//')
+#    linkname=$(basename "$dot")
+#    infect "$name" "$linkname"
+#done
