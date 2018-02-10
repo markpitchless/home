@@ -42,22 +42,30 @@ nfa-append-once(){
     line="$1"
     target="$2"
 
-    if [ ! -f "$target" ]; then
-        nfa-info Nothing to infect, "$target" not found
-    elif grep -q '^#nfa: infected' "$target"; then
-        nfa-info Already infected "$target"
-    else
-        nfa-bak-file "$target"
-        if [[ ! $dry == true ]]; then
-            # XXX: can't use dry here because of the redirection
-            echo "#nfa: infected" >> "$target"
-            echo "$line" >> "$target"
+    if [ -f "$target" ]; then
+        if grep -q '^#nfa: infected' "$target"; then
+            nfa-info Already infected "$target"
+            return
         fi
-        nfa-info Infected "$target"
+        nfa-bak-file "$target"
+    else
+        nfa-info Creating "$target"
     fi
+
+    if [[ ! $dry == true ]]; then
+        # XXX: can't use dry here because of the redirection
+        echo "#nfa: infected" >> "$target"
+        echo "$line" >> "$target"
+    fi
+    nfa-info Infected "$target"
 }
 
-# TODO: create missing files
+nfa-infect-profile-file() {
+    f1="$1"
+    fsrc="$2"
+    nfa-append-once "source $NFA/$fsrc" "$f1"
+}
+
 nfa-infect-profiles() {
     nfa-append-once "source $NFA/profile" "$HOME/.profile"
     nfa-append-once "source $NFA/bashrc" "$HOME/.bashrc"
