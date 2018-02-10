@@ -57,6 +57,7 @@ nfa-append-once(){
     fi
 }
 
+# TODO: create missing files
 nfa-infect-profiles() {
     nfa-append-once "source $NFA/profile" "$HOME/.profile"
     nfa-append-once "source $NFA/bashrc" "$HOME/.bashrc"
@@ -69,6 +70,7 @@ nfa-infect-profiles() {
 # TODO: Infect with  symlink but after the move, move all the existing
 # contents of the dir back in. So we don't loose all the .config by symlinking
 # it.
+# TODO: how to handle the nesting?
 nfa-infect-home() {
     for f1 in `find "$NFA"/home/ -mindepth 1 -maxdepth 1`; do
         nfa-link "$f1" "$HOME"/$(basename "$f1")

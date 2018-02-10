@@ -26,3 +26,15 @@ cd ~/.nfa
 git pull
 nfa-provision
 ``
+
+== Home Linking
+
+Nfa sym links files and folders from `~/.nfa/home/` to `~`, your home
+directory. This is so you can keep them under version control in your nfa
+repository but still have them in their expected locations on the system. Your
+editors and tools rc files are what this is for, e.g. a version controlled
+`.screenrc` in `~/.nfa/home/.screenrc` gets symlinked to `~/.screenrc` when
+nfa-infect runs, which also happens during a bootstrap. Now running screen will
+use your config, you can edit in the normal location (`vim ~/.screenrc`) but
+commit and push your changes to your repo so they appear in all your other
+logins after an `nfa-pull`.
