@@ -230,6 +230,7 @@ if has("gui_running")
     set guioptions-=L
 endif
 
+
 "
 " Pathogen bundle (plugin) manager.
 " See: https://github.com/tpope/vim-pathogen
@@ -247,8 +248,11 @@ execute pathogen#helptags()
 " Note: Syntax on also does :filetype on
 syntax on
 set background=dark
-"colorscheme mda_dark
-colorscheme solarized
+if has("gui_running")
+    colorscheme solarized
+else
+    colorscheme mda_dark
+endif
 
 "
 " FileType plugin.
