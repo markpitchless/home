@@ -26,16 +26,18 @@ nfa-bak-file(){
 }
 
 nfa-link(){
-    f="$1"
+    nfa_file="$1"
     target="$2"
 
     if [ -L "$target" ]; then
       nfa-info Already linked: $target
       return
     fi
+
+    # TODO: nfa-bak-file -m  # back with mv
     [ -e "$target" ] && dry mv "$target" "$target.nfa$bakdate"
-    dry ln -s "$f" "$target"
-    nfa-info Linked "$f" to "$target"
+    dry ln -s "$nfa_file" "$target"
+    nfa-info Linked "$nfa_file" to "$target"
 }
 
 nfa-append-once(){
@@ -73,15 +75,41 @@ nfa-infect-profiles() {
     nfa-append-once "source $NFA/bash_logout" "$HOME/.bash_logout"
 }
 
+nfa-infect-home-file() {
+    nfa_file="$1"
+    target="$2"
+
+    if [ -L "$target" ]; then
+      nfa-info Already linked: $target
+      return
+    fi
+
+    if [ -e "$target" ]; then
+        # We are going to replace target with a link, so copy the existing
+        # contents back in, so we don't loose configuration by symlinking.
+        # Existing files will appear as changes in the nfa repo.
+        # Directories get merged in, keeps existing, untracked config, e.g.
+        # keeps everything in .config and doesn't reset your desktops config by
+        # linking a mostly empty '.nfa/home/.config'!
+        # TODO: should we ask what to do here?
+        if [ -d "$target" ]; then
+            # Use the dir above to make sure we merge ALL files.
+            nfa_dir=$(dirname "$nfa_file")
+            dry cp -a "$target" "$nfa_dir"
+        else
+            dry cp -a "$target" "$nfa_file"
+        fi
+        nfa-info Merged content of "$target" into "$nfa_file"
+    fi
+
+    nfa-link "$nfa_file" "$target"
+}
+
 # Link anything in `$NFA/home/` to the same name in `$HOME`.
 # You put your dot files in `$NFA/home/`.
-# TODO: Infect with  symlink but after the move, move all the existing
-# contents of the dir back in. So we don't loose all the .config by symlinking
-# it.
-# TODO: how to handle the nesting?
 nfa-infect-home() {
     for f1 in `find "$NFA"/home/ -mindepth 1 -maxdepth 1`; do
-        nfa-link "$f1" "$HOME"/$(basename "$f1")
+        nfa-infect-home-file "$f1" "$HOME"/$(basename "$f1")
     done
 }
 
