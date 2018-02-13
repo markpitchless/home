@@ -1,59 +1,53 @@
 [global_config]
-  handle_size = 2
   always_split_with_profile = True
   focus = mouse
-  title_transmit_fg_color = "#fadc00"
-  title_transmit_bg_color = "#684ec5"
+  handle_size = 2
   title_inactive_bg_color = "#9a9597"
+  title_transmit_bg_color = "#684ec5"
+  title_transmit_fg_color = "#fadc00"
 [keybindings]
-[profiles]
-  [[default]]
-    scrollbar_position = hidden
-    use_system_font = False
-    font = Droid Sans Mono for Powerline 9
-    background_darkness = 0.92
-    scrollback_lines = 9999
-    background_image = None
-    scroll_on_output = False
-    copy_on_selection = True
-  [[fish]]
-    use_system_font = False
-    background_darkness = 0.88
-    scrollback_lines = 4014
-    background_type = transparent
-    background_image = None
-    use_custom_command = True
-    custom_command = fish
-    font = Droid Sans Mono for Powerline 9
-  [[solarized]]
-    scrollbar_position = hidden
-    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
-    copy_on_selection = True
-    background_image = None
-    background_darkness = 0.97
-    scrollback_lines = 10000
-    background_type = transparent
-    use_system_font = False
-    foreground_color = "#839496"
-    scroll_on_output = False
-    font = Droid Sans Mono for Powerline 10
-    background_color = "#002b36"
-  [[solarized light]]
-    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
-    font = Droid Sans Mono for Powerline 9
-    background_image = None
-    scrollback_lines = 50000
-    use_system_font = False
-    foreground_color = "#657b83"
-    scroll_on_output = False
-    copy_on_selection = True
-    background_color = "#fdf6e3"
 [layouts]
   [[default]]
     [[[child1]]]
-      type = Terminal
       parent = window0
+      type = Terminal
     [[[window0]]]
-      type = Window
       parent = ""
+      type = Window
 [plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.92
+    copy_on_selection = True
+    cursor_color = "#aaaaaa"
+    font = Droid Sans Mono for Powerline 12
+    scrollback_lines = 9999
+    scrollbar_position = hidden
+    use_system_font = False
+  [[fish]]
+    background_darkness = 0.88
+    background_type = transparent
+    custom_command = fish
+    font = Droid Sans Mono for Powerline 9
+    scrollback_lines = 4014
+    use_custom_command = True
+    use_system_font = False
+  [[solarized]]
+    background_color = "#002b36"
+    background_darkness = 0.97
+    background_type = transparent
+    copy_on_selection = True
+    font = Droid Sans Mono for Powerline 10
+    foreground_color = "#839496"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    scrollback_lines = 10000
+    scrollbar_position = hidden
+    use_system_font = False
+  [[solarized light]]
+    background_color = "#fdf6e3"
+    copy_on_selection = True
+    font = Droid Sans Mono for Powerline 9
+    foreground_color = "#657b83"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    scrollback_lines = 50000
+    use_system_font = False
