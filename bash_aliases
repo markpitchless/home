@@ -23,3 +23,14 @@ alias push='git push'
 alias lsv='git status'
 
 alias ansible-vagrant='ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory -u vagrant --private-key ~/.vagrant.d/insecure_private_key'
+
+# Ruby
+alias be='bundle exec'
+
+# Buildzones
+alias bz='bundle exec buildzone'
+
+# Triton profiles
+alias triton-jenkins='triton -p ovh-jenkins'
+
+alias dk='devkit'

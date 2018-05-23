@@ -1,6 +1,7 @@
 [user]
 	name = Mark Pitchless
 	email = markpitchless@gmail.com
+	signingkey = 93797FFD78F725F61DA21415304D2344158139AE
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
@@ -27,3 +28,8 @@
 	helper = cache
 [push]
 	default = simple
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
