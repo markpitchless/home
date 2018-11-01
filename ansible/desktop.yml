@@ -8,6 +8,6 @@
 # XPS laptop ubuntu
 - hosts: ziller
   roles:
-    - aws_developer
+    #- aws_developer
     #- display_link
     #- cocoon_developer

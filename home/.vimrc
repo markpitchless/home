@@ -235,6 +235,7 @@ if has("gui_running")
     set guioptions-=L
 endif
 
+
 "
 " Pathogen bundle (plugin) manager.
 " See: https://github.com/tpope/vim-pathogen

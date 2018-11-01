@@ -1,57 +1,6 @@
-[submodule "dot.vim/bundle/nerdtree"]
-	path = dot.vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "dot.vim/bundle/nerdcommenter"]
-	path = dot.vim/bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "dot.vim/bundle/ack"]
-	path = dot.vim/bundle/ack
-	url = https://github.com/mileszs/ack.vim.git
-[submodule "dot.vim/bundle/tabular"]
-	path = dot.vim/bundle/tabular
-	url = git://github.com/godlygeek/tabular.git
 [submodule "dot.vim/bundle/vim-ansible-yaml"]
 	path = dot.vim/bundle/vim-ansible-yaml
 	url = git://github.com/chase/vim-ansible-yaml.git
-[submodule "dot.vim/bundle/vim-json"]
-	path = dot.vim/bundle/vim-json
-	url = https://github.com/elzr/vim-json
-[submodule "dot.vim/bundle/vim-swig"]
-	path = dot.vim/bundle/vim-swig
-	url = https://github.com/naegelejd/vim-swig
-[submodule "dot.vim/bundle/vim-airline"]
-	path = dot.vim/bundle/vim-airline
-	url = https://github.com/bling/vim-airline
-[submodule "dot.vim/bundle/vim-gitgutter"]
-	path = dot.vim/bundle/vim-gitgutter
-	url = git://github.com/airblade/vim-gitgutter.git
-[submodule "dot.vim/bundle/vim-fugitive"]
-	path = dot.vim/bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
-[submodule "dot.vim/bundle/tagbar"]
-	path = dot.vim/bundle/tagbar
-	url = https://github.com/majutsushi/tagbar
-[submodule "dot.vim/bundle/supertab"]
-	path = dot.vim/bundle/supertab
-	url = https://github.com/ervandew/supertab
-[submodule "dot.vim/bundle/vim-colors-solarized"]
-	path = dot.vim/bundle/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
-[submodule "dot.vim/bundle/vim-airline-themes"]
-	path = dot.vim/bundle/vim-airline-themes
-	url = git@github.com:vim-airline/vim-airline-themes.git
-[submodule "dot.vim/bundle/ansible-vim"]
-	path = dot.vim/bundle/ansible-vim
-	url = https://github.com/pearofducks/ansible-vim
-[submodule "dot.vim/bundle/vim-go"]
-	path = dot.vim/bundle/vim-go
-	url = git@github.com:fatih/vim-go.git
-[submodule "dot.vim/bundle/yajs.vim"]
-	path = dot.vim/bundle/yajs.vim
-	url = https://github.com/othree/yajs.vim.git
-[submodule "dot.vim/bundle/javascript-libraries-syntax.vim"]
-	path = dot.vim/bundle/javascript-libraries-syntax.vim
-	url = https://github.com/othree/javascript-libraries-syntax.vim.git
 [submodule "dot.vim/bundle/syntastic"]
 	path = dot.vim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git

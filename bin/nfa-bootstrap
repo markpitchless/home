@@ -6,16 +6,24 @@
 # symlink in the nfa versions.
 #
 
-sudo apt-get install git ansible
+set -euo pipefail
 
-git clone http://github.com/markpitchless/home.git ~/.nfa
+: ${NFA:=~/.nfa}
+: ${NFA_SOURCE_REPO:=http://github.com/markpitchless/home.git}
+
+if ! which git 1>/dev/null; then
+    sudo apt-get install git
+fi
+
+if [ -d "$NFA" ]; then
+    echo NFA already boot strapped
+    exit 0
+fi
+
 (
-    cd ~/.nfa
+    git clone "$NFA_SOURCE_REPO" "$NFA"
+    cd "$NFA"
     git submodule update --init
 )
 
-~/.nfa/bin/nfa-infect
-
-cd
-source ~/.bashrc
-nfa-provision
+exec "$NFA/bin/nfa-infect"

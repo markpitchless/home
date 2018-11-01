@@ -1,3 +1,12 @@
-#!/bin/sh
-cd ~/.nfa/ansible
-ansible-playbook -i inventory desktop.yml -K $@
+#!/bin/bash
+
+set -euo pipefail
+
+: ${NFA:=~/.nfa}
+
+if ! which ansible 1>/dev/null; then
+    sudo apt-get install ansible
+fi
+
+cd $NFA/ansible
+exec ansible-playbook -i inventory desktop.yml -K $@
