@@ -164,4 +164,4 @@ if [ -f ~/.nfa/bash_aliases ]; then
     . ~/.nfa/bash_aliases
 fi
 
-source ~/.aws.env
+#source ~/.aws.env
