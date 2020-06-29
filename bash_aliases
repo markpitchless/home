@@ -33,4 +33,4 @@ alias bz='bundle exec buildzone'
 # Triton profiles
 alias triton-jenkins='triton -p ovh-jenkins'
 
-alias dk='devkit'
+alias dk='chruby-exec 2.7.0 -- devkit'
