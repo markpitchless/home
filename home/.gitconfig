@@ -11,11 +11,11 @@
 	branch = auto
 	interactive = auto
 	diff = auto
-[color "diff"]
-	plain = white
-	meta = magenta
-	frag = cyan
-    func = yellow
+#[color "diff"]
+#	plain = white
+#	meta = magenta
+#	frag = cyan
+#    func = yellow
 [merge]
     conflictstyle = diff3
 [alias]
@@ -33,3 +33,5 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+[url "git@github.com:"]
+	insteadOf = https://github.com/

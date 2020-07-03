@@ -5,6 +5,10 @@
 ## Print nickname for git/hg/bzr/svn version control in CWD
 ## Optional $1 of format string for printf, default "(%s) "
 function vcs_get_branch {
+    echo "[$(git branch 2>/dev/null | grep '^\*')]"
+}
+
+function vcs_get_branch_old {
   local dir="$PWD"
   local vcs
   local nick
