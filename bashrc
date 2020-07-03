@@ -23,8 +23,8 @@ HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=100000
+HISTFILESIZE=200000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -69,7 +69,7 @@ if [ "$color_prompt" = yes ]; then
         # Command on own line
         #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
         # command on own line and short pwd
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]$(date +"%d%b_%H:%M")\[\033[00m\] \[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;33m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -85,22 +85,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-# http://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
-case "$OSTYPE" in
-    linux*)
-        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-        alias ls='ls --color=auto'
-        #alias dir='dir --color=auto'
-        #alias vdir='vdir --color=auto'
-        ;;
-    darwin*)
-        alias ls='ls -G'
-esac
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
 # Setup a symlink for the .screenrc to use for the agent. Allows re-connect of
 # the agent after screen session disconects.
 # Don't link if auth sock *is* the symlink, which happens inside the screen.
@@ -109,22 +93,13 @@ if test "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != ~/.ssh/ssh_auth_sock; then
     ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
 fi
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.nfa/bash_aliases ]; then
-    . ~/.nfa/bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
     if [ -f /etc/bash_completion ]; then
         . /etc/bash_completion
-    elif which -s brew && [ -f $(brew --prefix)/etc/bash_completion ]; then
+    elif which brew 1>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
         # MacOS
         . "$(brew --prefix)/etc/bash_completion"
     fi
@@ -156,3 +131,37 @@ localrc_file="$HOME/.bashrc.local"
 if [ -r "$localrc_file" ]; then
     . $localrc_file
 fi
+
+# Enable color support of ls and also add handy aliases
+# Test ls to see if supports --color (gnu ls basically).
+# Doing this after all the local config files in case they mod the PATH
+if ls --color 1>/dev/null 2>&1; then
+    alias ls='ls --color=auto'
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+else
+    alias ls='ls -G'
+fi
+# http://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script
+#case "$OSTYPE" in
+#    linux*)
+#        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+#        alias ls='ls --color=auto'
+#        #alias dir='dir --color=auto'
+#        #alias vdir='vdir --color=auto'
+#        ;;
+#    darwin*)
+#        alias ls='ls -G'
+#esac
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.nfa/bash_aliases ]; then
+    . ~/.nfa/bash_aliases
+fi
+
+#source ~/.aws.env

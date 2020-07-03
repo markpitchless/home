@@ -52,3 +52,12 @@
 [submodule "dot.vim/bundle/javascript-libraries-syntax.vim"]
 	path = home/.vim/bundle/javascript-libraries-syntax.vim
 	url = https://github.com/othree/javascript-libraries-syntax.vim.git
+[submodule "dot.vim/bundle/syntastic"]
+	path = home/.vim/bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "dot.vim/bundle/vim-nagios"]
+	path = home/.vim/bundle/vim-nagios
+	url = git@github.com:bigbrozer/vim-nagios.git
+[submodule "dot.vim/bundle/vim-puppet"]
+	path = home/.vim/bundle/vim-puppet
+	url = git://github.com/rodjek/vim-puppet.git

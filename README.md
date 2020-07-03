@@ -1,16 +1,18 @@
-***********************
-* Mark Pitchless Home *
-***********************
+# Mark Pitchless NFA
 
-Putting my home dir (profile) under git control.
+```
+************************
+*  Mark Pitchless NFA  *
+************************
+```
 
-https://github.com/markpitchless/home
+Putting my home dir (profile) under git control. https://github.com/markpitchless/home
 
-== Bootstrap ==
+## Bootstrap
 
 1st time install into a new home directory.
 
-```
+```sh
 cd ~
 wget https://raw.githubusercontent.com/markpitchless/home/master/bin/nfa-bootstrap
 chmod a+x nfa-bootstrap
@@ -25,15 +27,15 @@ from that experience or worse, invent a half baked, partly implemented VCS with
 a symlink obsession and git as a back end. It is supposed to be a profile
 manager, that loves symlinks and has a (fairly exposed) git back end.
 
-== Updates ==
+## Updates
 
-``
+```sh
 cd ~/.nfa
 git pull
 nfa-provision
-``
+```
 
-== Home Linking
+## Home Linking
 
 Nfa sym links files and folders from `~/.nfa/home/` to `~`, your home
 directory. This is so you can keep them under version control in your nfa
@@ -62,7 +64,7 @@ It does stop you only linking certain dirs on certain hosts. Well parts of
 dirs, could add something to the infect logic that controls that, at least for
 the top level dirs.
 
-```
+```sh
 nfa add
 nfa remove
 nfa ignore
@@ -72,11 +74,12 @@ The above commands can be given paths in the actual home namespace and
 basically map down to git commands in the .nfa/home namespace.
 Ignore updates the `.gitignore` file in `.nfa/home`
 
-```
+```sh
 nfa push
 nfa pull
+```
 
-== Ideas
+## Ideas
 
 `.nfa/env` (`.nfa/environment`), env file loaded by all nfa commands, basically a persistant env, basic config.
-```
+
