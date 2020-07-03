@@ -69,7 +69,9 @@ if [ "$color_prompt" = yes ]; then
         # Command on own line
         #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
         # command on own line and short pwd
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]$(date +"%d%b_%H:%M")\[\033[00m\] \[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;33m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
+        #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]$(date +"%d%b_%H:%M")\[\033[00m\] \[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;33m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(vcs_get_branch)\n\[\033[01;32m\]> \[\033[00m\]'
+        source /usr/local/etc/bash_completion.d/git-prompt.sh
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]$(date +"%d%b_%H:%M")\[\033[00m\] \[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;33m\]$(shortPWD -c -m30)\[\033[00m\] \[\033[01;32m\]$(__git_ps1)\n\[\033[01;32m\]> \[\033[00m\]'
     fi
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
