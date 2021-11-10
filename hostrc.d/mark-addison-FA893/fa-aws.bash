@@ -1,0 +1,3 @@
+export AWS_VAULT_KEYCHAIN_NAME=login
+export AWS_SDK_LOAD_CONFIG=1
+export AWS_VAULT_PROMPT=osascript

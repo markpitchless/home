@@ -48,3 +48,14 @@ end
 # function push;     vcs push $argv; end
 # function branch;   vcs branch $argv; end
 
+function bi -d "Bundle install"
+    bundle install $argv
+end
+
+function be -d "Bundle exec"
+    bundle exec $argv
+end
+
+function bo -d "Bundle open"
+    bundle open $argv
+end
